@@ -1,0 +1,46 @@
+<ng-template #modal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title fs-14px  fw-bolder">Update Client</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="formulario">
+      <div class="row mb-3">
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <fieldset>
+            <label>Names <span class="validacion">*</span></label>
+            <input formControlName="names" type="text" class="form-control" placeholder="names">
+            <app-validacion [validacion]="'required'" [texto]="'The names is required.'"
+              [control]="this.formulario.controls['names']" />
+          </fieldset>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <fieldset>
+            <label>Surnames <span class="validacion">*</span></label>
+            <input formControlName="surnames" type="text" class="form-control" placeholder="surnames">
+            <app-validacion [validacion]="'required'" [texto]="'The surnames is required.'"
+            [control]="this.formulario.controls['surnames']" />
+          </fieldset>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <fieldset>
+            <label>Email <span class="validacion">*</span></label>
+            <input formControlName="email" type="text" class="form-control"
+              placeholder="email">
+            <app-validacion [validacion]="'required'" [texto]="'email is required.'"
+              [control]="this.formulario.controls['email']" />
+          </fieldset>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer d-flex">
+    <div class="d-flex justify-content-end">
+      <button type="button" class="boton primario relleno" (click)="update()">
+        Update
+      </button>
+    </div>
+  </div>
+  
+</ng-template>
+<app-popup #popup />

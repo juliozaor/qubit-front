@@ -1,0 +1,101 @@
+<div id="login">
+    <div class="container">
+        <div id="login-row" class="row justify-content-center align-items-center">
+            <div id="login-column" class="col-md-6">
+                <div id="login-box" class="col-md-12">
+                    <img class="logo-clinica" src="assets/images/logo.png" alt="Clínica CES">
+                    <form [formGroup]="forma"
+                    (ngSubmit)="login()"
+                    id="login-form" 
+                    class="form" 
+                    action="" 
+                    method="post"
+                    >
+                        <h3 class="text-center text-info">Login</h3>
+                        <div class="form-group input-form"
+                        [ngClass]="{'validacion': !forma.get('usuario')?.valid}">
+                            <label for="username" class="text-info">Usuario:</label><br>
+                            <input 
+                            type="text" 
+                            class="form-control"
+                            formControlName="usuario"
+                            >   
+                            <div *ngIf="forma.controls['usuario'].errors && forma.controls['usuario'].errors['required'] && forma.controls['usuario'].dirty"
+                            class="form-control-feedback">
+                            User is required
+                            </div>                         
+                        </div>
+                        <div class="form-group input-form"
+                        [ngClass]="{'validacion': !forma.get('password')?.valid}">
+                            <label for="password" class="text-info">Contraseña:</label><br>
+                            <input type="text" id="password" class="form-control"
+                            type="password"
+                            formControlName="password"
+                            >
+                            <div *ngIf="forma.controls['password'].errors && forma.controls['password'].errors['required'] && forma.controls['password'].dirty"
+                            class="form-control-feedback">
+                            Password is required
+                            </div>
+                        </div>
+
+
+                        <div class="form-group input-form">
+                            <input type="submit"
+                            name="submit" class="btn btn-info btn-md btn-login" value="Login">
+                        </div>                        
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-popup #popup />
+<!-- 
+    <div id="login">
+    <div class="container">
+        <div id="login-row" class="row justify-content-center align-items-center">
+            <div id="login-column" class="col-md-6">
+                <div id="login-box" class="col-md-12">
+                    <img class="logo-clinica" src="assets/images/logo-ces.png" alt="Clínica CES">
+                    <form (ngSubmit) = 'login(f)'
+                    #f="ngForm"
+                    id="login-form" 
+                    class="form" 
+                    action="" 
+                    method="post"
+                    novalidate=""
+                    >
+                        <h3 class="text-center text-info">Inicio de sesión</h3>
+                        <div class="form-group input-form">
+                            <label for="username" class="text-info">Usuario:</label><br>
+                            <input 
+                            type="number" 
+                            id="usuario" 
+                            class="form-control"
+                            name="usuario"
+                            required                           
+                            [(ngModel)] = "usuario.usuario"
+                            >                            
+                        </div>
+                        <div class="form-group input-form">
+                            <label for="password" class="text-info">Contraseña:</label><br>
+                            <input type="text" id="password" class="form-control"
+                            name="password"
+                            type="password"
+                            required
+                            [(ngModel)] = "usuario.password">
+                        </div>
+
+
+                        <div class="form-group input-form">
+                            <input type="submit"
+                            name="submit" class="btn btn-info btn-md btn-login" value="Entrar">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ -->

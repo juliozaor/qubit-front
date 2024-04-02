@@ -1,0 +1,32 @@
+.bienvenida {
+  text-align: center;
+  font-size: 40px;
+  font-weight: 800;
+  color: #0067AA;
+}
+.logo-centro{
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+.textosImg{
+  position: absolute;
+}
+.s1, .s2, .s3{
+  font-family: "Proxima-nova",Sans-serif;
+  font-size: 48px;
+  font-weight: 800;
+  margin: 20px 0px;
+}
+.s1{  
+  color: #fff;
+}
+.s2{
+  
+  color: #FED103;
+}
+.s3{
+  color: #FFF;
+  font-size: 37px;
+  font-weight: 600;
+}

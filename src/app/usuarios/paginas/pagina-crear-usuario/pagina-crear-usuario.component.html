@@ -1,0 +1,181 @@
+<div class="p-5">
+  <h2 class="texto-primario fw-semibold mb-3">Create user</h2>
+  <form [formGroup]="formulario">
+      <div class="row mb-3">
+          <label class="fw-semibold fs-16px mb-2">User data</label>
+          <div class="col-sm-12 col-md-6 col-lg-3">
+              <fieldset>
+                  <label>Name <span class="validacion">*</span></label> 
+                  <input formControlName="name" type="text" class="form-control" >
+                  <app-validacion
+                  [validacion]="'required'"
+                  [texto]="'The name is required.'"
+                  [control]="this.formulario.controls['name']"
+                  />
+              </fieldset>
+          </div>
+          <div class="col-sm-12 col-md-6 col-lg-3">
+              <fieldset>
+                  <label>Last name</label>
+                  <input formControlName="lastname" type="text" class="form-control">
+              </fieldset>
+          </div>
+          <div class="col-sm-12 col-md-6 col-lg-3">
+              <fieldset>
+                  <label>Identification number <span class="validacion">*</span></label>
+                  <input formControlName="document" type="text" class="form-control" >
+                  <app-validacion
+                  [validacion]="'required'"
+                  [texto]="'Identification number is required.'"
+                  [control]="this.formulario.controls['document']"
+                  />
+              </fieldset>
+          </div>
+          <div class="col-sm-12 col-md-6 col-lg-3">
+              <fieldset>
+                  <label>Birthdate <span class="validacion">*</span></label>
+                  <input formControlName="dateBirth" type="date" class="form-control" >
+                  <app-validacion
+                  [validacion]="'required'"
+                  [texto]="'Date of birth is required.'"
+                  [control]="this.formulario.controls['dateBirth']"
+                  />
+              </fieldset>
+          </div>
+      </div>
+      <div class="row mb-3">
+          <label class="fw-semibold fs-16px mb-2">Contact information</label>
+          <div class="col-sm-12 col-md-6">
+              <fieldset>
+                  <label>Email <span class="validacion">*</span></label>
+                  <input formControlName="mail" type="text" class="form-control" >
+                  <app-validacion
+                  [validacion]="'required'"
+                  [texto]="'Email is required.'"
+                  [control]="this.formulario.controls['mail']"
+                  />
+                  <app-validacion
+                  [validacion]="'email'"
+                  [texto]="'It is not a valid email.'"
+                  [control]="this.formulario.controls['mail']"
+                  />
+              </fieldset>
+          </div>
+          <div class="col-sm-12 col-md-6">
+              <fieldset>
+                  <label>Phone</label>
+                  <input formControlName="phone" type="text" class="form-control" >
+              </fieldset>
+          </div>
+      </div>
+      <div class="row mb-5">
+          <label class="fw-semibold fs-16px mb-2">Access information</label>
+          <div class="col-sm-12 col-md-6 col-lg-3">
+            <fieldset>
+                <label>User <span class="validacion">*</span></label>
+                <input formControlName="user" type="text" class="form-control" >
+                <app-validacion
+                [validacion]="'required'"
+                [texto]="'The user is required.'"
+                [control]="this.formulario.controls['user']"
+                />
+            </fieldset>
+        </div>
+          <div class="col-sm-12 col-md-3">
+              <fieldset>
+                  <label>Role <span class="validacion">*</span></label>
+                  <select formControlName="roleId" class="form-select">
+                      <option value="" selected>Select a role</option>
+                      <option *ngFor="let rol of roles" [value]="rol._id">{{ rol._name }}</option>
+                  </select>
+                  <app-validacion
+                  [validacion]="'required'"
+                  [texto]="'The role is required.'"
+                  [control]="this.formulario.controls['roleId']"
+                  />    
+              </fieldset>
+          </div>
+      </div>
+
+      <div class="d-flex justify-content-end">
+          <button type="button" class="boton primario relleno" (click)="crear()">
+              Save
+          </button>
+      </div>
+  </form>
+  <hr>
+
+
+  
+  <h2 class="texto-primario fw-semibold mb-3">User List</h2>
+  <div class="d-flex mb-3 flex-gap-20">
+      <fieldset class="me-2">
+          <label class="fs-14px fw-semibold">Keyword</label>
+          <app-input-busqueda [(ngModel)]="termino" />
+      </fieldset>
+      <fieldset class="me-2">
+          <label class="fs-14px fw-semibold">Role</label>
+          <select [(ngModel)]="rol" class="form-select">
+              <option value="" selected>Select a role</option>
+              <option *ngFor="let rol of roles" [value]="rol._id">{{ rol._name }}</option>
+          </select>
+      </fieldset>
+      <fieldset class="d-flex align-items-end">
+          <button class="boton primario relleno me-2" (click)="actualizarFiltros()">
+            search
+          </button>
+          <button class="boton primario delineado" (click)="limpiarFiltros()">
+            Clean filters
+          </button>
+      </fieldset>
+  </div>
+  <div class="table-responsive mb-3">
+      <table class="table lista-de-usuarios">
+          <thead>
+              <tr>
+                  <th>Document</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th colspan="2" class="text-center" width="50px">Actions</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let usuario of usuarios">
+                  <td>{{ usuario.user }}</td>
+                  <td>{{ usuario.name }}</td>
+                  <td>{{ usuario.mail }}</td>
+                  <td width="10px">
+                      <span class="cursor-pointer" (click)="abrirModalActualizarUsuario(usuario)"><mat-icon>edit</mat-icon> </span>
+                  </td>
+                  <!-- <td width="10px">
+                    <span class="cursor-pointer" (click)="cambiarEstado(usuario.usuario)"><mat-icon>delete</mat-icon> </span>
+                </td> -->
+              </tr>
+              <tr *ngIf="usuarios.length === 0">
+                  <td colspan="6">No users were found with the established filters.</td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+  <div class="d-flex justify-content-end">
+      <ngb-pagination 
+      [collectionSize]="this.pager.totalRecords ?? 0"
+      [pageSize]="this.pager.limit"
+      [page]="this.pager.page"
+      [maxSize]="5"
+      (pageChange)="this.pager.cambiarPagina($event)"
+      >
+          <ng-template ngbPaginationFirst>Prim.</ng-template>
+          <ng-template ngbPaginationLast>Ult.</ng-template>
+          <ng-template ngbPaginationPrevious>Ant.</ng-template>
+          <ng-template ngbPaginationNext>Sig.</ng-template>
+      </ngb-pagination>
+  </div>
+</div>
+<app-modal-actualizar-usuario 
+  #modalActualizarUsuario 
+  (usuarioActualizado)="manejarUsuarioActualizado()" />
+<app-popup #popup />
+
+
+

@@ -1,0 +1,14 @@
+<div class="container-input">
+  <div class="icon">
+      <img src="assets/images/buscar.svg" alt="seach" draggable="false">
+  </div>
+  <input
+  #input
+  class="form-control" 
+  type="text" 
+  placeholder="Search..."
+  [value]="text"
+  (change)="controler(input.value)"
+  (keyup)="controler(input.value)">
+</div>
+

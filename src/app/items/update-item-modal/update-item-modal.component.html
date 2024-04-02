@@ -1,0 +1,94 @@
+<ng-template #modal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title fs-14px  fw-bolder">Update Item</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="formulario">
+      <div class="row mb-3">
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <fieldset>
+            <label>Code <span class="validacion">*</span></label>
+            <input formControlName="code" type="text" class="form-control" placeholder="code">
+            <app-validacion [validacion]="'required'" [texto]="'The code is required.'"
+              [control]="this.formulario.controls['code']" />
+          </fieldset>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <fieldset>
+            <label>Name <span class="validacion">*</span></label>
+            <input formControlName="name" type="text" class="form-control" placeholder="name">
+            <app-validacion [validacion]="'required'" [texto]="'The code is required.'"
+            [control]="this.formulario.controls['name']" />
+          </fieldset>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <fieldset>
+            <label>Description <span class="validacion">*</span></label>
+            <input formControlName="description" type="text" class="form-control"
+              placeholder="description">
+            <app-validacion [validacion]="'required'" [texto]="'description is required.'"
+              [control]="this.formulario.controls['description']" />
+          </fieldset>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <fieldset class="me-2">
+            <label>Type Item <span class="validacion">*</span></label>                 
+                <ng-select formControlName="typeItemId" class="form-select">
+                  <ng-option *ngFor="let typeItem of typesItem" [value]="typeItem.id">{{ typeItem.name }}</ng-option>
+                 </ng-select>
+                <app-validacion
+                [validacion]="'required'"
+                [texto]="'The item type is required.'"
+                [control]="this.formulario.controls['typeUnitId']"
+                />    
+        </fieldset>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-sm-12 col-md-6">
+          <fieldset>
+            <label>Base Price <span class="validacion">*</span></label>
+            <input formControlName="basePrice" type="number" class="form-control" placeholder="basePrice">
+            <app-validacion [validacion]="'required'" [texto]="'basePrice is required.'"
+              [control]="this.formulario.controls['basePrice']" />
+             
+          </fieldset>
+          
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <fieldset>
+            <label>Base Tax <span class="validacion">*</span></label>
+            <input formControlName="baseTax" type="text" class="form-control" placeholder="baseTax">
+            <app-validacion [validacion]="'required'" [texto]="'baseTax is required.'"
+            [control]="this.formulario.controls['baseTax']" />
+          </fieldset>
+        </div>
+      </div>
+      <div class="row mb-5">
+        <div class="col-sm-12 col-md-3">
+          <fieldset class="me-2">
+            <label>Type Unit <span class="validacion">*</span></label>                 
+                <ng-select formControlName="typeUnitId" class="form-select">
+                  <ng-option *ngFor="let typeUnitId of typesUnit" [value]="typeUnitId.id">{{ typeUnitId.name }}</ng-option>
+                 </ng-select>
+                <app-validacion
+                [validacion]="'required'"
+                [texto]="'Unit type is required.'"
+                [control]="this.formulario.controls['typeUnitId']"
+                />    
+        </fieldset>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer d-flex">
+    <div class="d-flex justify-content-end">
+      <button type="button" class="boton primario relleno" (click)="update()">
+        Update
+      </button>
+    </div>
+  </div>
+  
+</ng-template>
+<app-popup #popup />

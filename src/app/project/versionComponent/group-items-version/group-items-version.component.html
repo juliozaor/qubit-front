@@ -1,0 +1,48 @@
+<div class="p-5">
+  <h2 class="texto-primario fw-semibold mb-3">Group Items</h2>
+  <form [formGroup]="formulario">     
+     
+      <div class="row mb-3">
+          <label class="fw-semibold fs-16px mb-2">Groups</label>
+          <div class="col-sm-12 col-md-3">
+              <fieldset>
+                  <label>Role <span class="validacion">*</span></label>
+                  <select formControlName="groupId" class="form-select">
+                      <option value="" selected>Select a role</option>
+                      <option *ngFor="let group of groupItems" [value]="group.id">{{ group.name }}</option>
+                  </select>
+                  <app-validacion
+                  [validacion]="'required'"
+                  [texto]="'The item group is required.'"
+                  [control]="this.formulario.controls['groupId']"
+                  />    
+              </fieldset>
+          </div>
+      </div>
+
+      <div class="d-flex justify-content-left">
+          <button type="button" class="boton primario relleno" (click)="addGroup()">
+            Add item group
+          </button>
+      </div>
+  </form>
+  <hr>
+
+  <ul class="groupsItem">
+    <li *ngFor="let groupIItemVersion of groupIItemVersions">
+      <app-items-version 
+      #itemsVersion
+      [itemsGroup] = "groupIItemVersion['itemsGroup']"
+      [projectVersionId] = "projectVersionId!"
+      (createdIItemVersion)="createdIItemVersion()"
+      />
+
+    </li>
+  </ul>
+
+  
+</div>
+<app-popup #popup />
+
+
+

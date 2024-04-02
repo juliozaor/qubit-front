@@ -1,0 +1,62 @@
+<div class="w-100">
+  <div class="clasificacion d-flex w-100 cursor-pointer" (click)="toogleUnfolded()">
+      <span>
+          <img *ngIf="unfolded" src="assets/images/unfolded.png" class="cursor-pointer" draggable="false" alt="unfolded">
+          <img *ngIf="!unfolded" src="assets/images/folded.png" class="cursor-pointer" draggable="false" alt="folded">
+      </span>
+      <span class="texto-azul-004884 fs-14px fw-semibold">
+          {{itemsGroup.name}} {{itemsGroup.id}} {{projectVersionId}}
+      </span>
+  </div>
+  
+  <div class="w-100 overflow-auto custom-scroll" [ngClass]="{'d-none': !unfolded, 'd-block': unfolded}">
+    <div class="d-flex mb-3 justify-content-end me-5"> 
+      <fieldset class="d-flex align-items-end me-2">
+        <button class="boton btn btn-success  d-flex align-items-center" (click)="modalCreate()"><mat-icon>add</mat-icon> New Item</button>
+    </fieldset>
+    </div>
+    <div class="table-responsive mb-3">
+      <table class="table list-items">
+          <thead>
+              <tr>
+                <th>ID</th>
+                <th>Code</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Number Unit</th>
+                  <th>Price Unit</th>
+                  <th>Price Total</th>
+                  <th colspan="2" class="text-center">Actions</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let item of itemsGroup.items">
+                  <td>{{ item.id }}</td>
+                  <td>{{ item.code }}</td>
+                  <td>{{ item.name }}</td>
+                  <td>{{ item.description }}</td>
+                  <td>{{ item.numberUnit }}</td>
+                  <td>{{ item.priceUnit }}</td>
+                  <td>{{ item.priceTotal }}</td>
+                  <td width="10px">
+                      <span class="cursor-pointer" (click)="modalUpdate(item)" ><mat-icon>edit</mat-icon> </span>
+                  </td>
+                  <td width="10px">
+                    <span class="cursor-pointer" (click)="deleteItem(item.id)"><mat-icon>delete</mat-icon> </span>
+                </td>
+              </tr>
+              <tr *ngIf="itemsGroup.items?.length === 0">
+                  <td colspan="6">No items were found with the established filters.</td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+  </div>
+</div>
+
+<app-create-items-version-modal #modalCreateItemVersion 
+(createdIItemVersion)="createdIItemVersion()"
+/>
+<app-update-items-version-modal #modalUpdateItemVersion 
+(updatedIItemVersion)="updatedIItemVersion()"
+/>

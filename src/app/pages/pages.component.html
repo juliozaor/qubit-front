@@ -1,0 +1,114 @@
+
+
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #sidenav="matSidenav" mode="side" opened>
+    <div class="logo-dasboard">
+      <img class="logo-clinica" src="assets/images/logo.png" alt="Clínica CES">
+    </div>
+  
+    <!-- Menu Lateral -->
+    <mat-divider></mat-divider>    
+    <a mat-button class="menu-button" [routerLink]="['home']" routerLinkActive="active">
+      <mat-icon>home</mat-icon> 
+      <span>Home</span>
+    </a>
+    <mat-divider></mat-divider>
+    <br>
+    
+    <div *ngFor="let modulo of modulos">
+      <!-- <ng-container *ngIf="modulo.parametro">
+        <a mat-button class="menu-button" [routerLink]="[modulo.ruta, modulo.parametro]" routerLinkActive="active">
+          <mat-icon>{{modulo.icono}}</mat-icon>
+          <span>{{modulo.nombre}}</span>
+        </a>
+      </ng-container> -->
+    
+      <ng-container>
+        <!-- Mostrar este enlace si modulo.parametro está vacío o es nulo -->
+        <a mat-button class="menu-button" [routerLink]="[modulo.path]" routerLinkActive="active">
+          <mat-icon>{{modulo.icon}}</mat-icon>
+          <span>{{modulo.name}}</span>
+        </a>
+      </ng-container>
+    
+      <mat-divider></mat-divider>
+    </div>
+   <!--  <button mat-button class="menu-button" (click)="toggleBotones()">
+      <mat-icon>admin_panel_settings</mat-icon>
+      <span>Administrar</span>
+    </button> -->
+    <!-- <mat-divider></mat-divider> -->
+
+    
+
+    <!-- <a mat-button class="menu-button" *ngIf="mostrarBotones" [routerLink]="['formulario/analizar']" routerLinkActive="active">   
+      <span>Analizar</span>
+    </a>
+    <mat-divider></mat-divider> -->
+
+
+  <!--   <a mat-button class="menu-button" *ngIf="mostrarBotones" [routerLink]="['formulario/gestionar']" routerLinkActive="active">
+   
+      <span>Gestionar</span>
+    </a>
+    <mat-divider></mat-divider>
+    <a mat-button class="menu-button" *ngIf="mostrarBotones" [routerLink]="['formulario/validar']" routerLinkActive="active">
+   
+      <span>Validar</span>
+    </a>
+    <mat-divider></mat-divider> -->
+  </mat-sidenav>
+  
+  
+  
+  <mat-sidenav-content>
+
+    <!-- Inicio toolbar -->
+    <mat-toolbar color="primary">
+      <button *ngIf="sidenav.mode === 'over'"
+      (click)="sidenav.toggle()" 
+      mat-icon-button 
+      class="example-icon" 
+      aria-label="icon-button with menu icon">
+        <mat-icon >menu</mat-icon>
+        <mat-icon *ngIf="sidenav.opened">close</mat-icon>
+      </button>
+    <!--   <span>My App</span> -->
+      <span class="example-spacer"></span>
+
+
+      <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" [matMenuTriggerFor]="menu">
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="person"></mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <!-- <button mat-menu-item>Perfil</button> -->
+        <button mat-menu-item 
+        (click)="salir()"
+        >Logout</button>
+      </mat-menu>
+
+
+
+
+     <!--  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="person"></mat-icon>
+  
+      </button> -->
+    </mat-toolbar>  
+    <!-- Fin toolbar -->
+
+    <!-- Contenedor principal -->
+<div class="container mt-3">
+  <mat-card>
+   <!--  <mat-card-header><mat-card-title>Bienvenido</mat-card-title></mat-card-header> -->
+    <mat-card-content>
+      <router-outlet></router-outlet>
+      
+    </mat-card-content>
+  </mat-card>
+  
+
+</div>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

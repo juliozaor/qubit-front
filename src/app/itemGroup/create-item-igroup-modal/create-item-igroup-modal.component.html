@@ -1,0 +1,68 @@
+<ng-template #modal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title fs-14px  fw-bolder">Add item</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="formulario">
+      <div class="row mb-3">
+        <div class="col-sm-12 col-md-6 col-lg-3">          
+          <fieldset class="me-2">
+            <label>items <span class="validacion">*</span></label>                 
+                <ng-select formControlName="itemId" class="form-select">
+                  <ng-option *ngFor="let item of items" [value]="item.id">{{ item.name }}</ng-option>
+                </ng-select>
+                <app-validacion
+                [validacion]="'required'"
+                [texto]="'The item is required.'"
+                [control]="this.formulario.controls['itemId']"
+                />    
+        </fieldset>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <fieldset>
+            <label>Number Unit <span class="validacion">*</span></label>
+            <input formControlName="numberUnit" type="text" class="form-control" placeholder="numberUnit">
+            <app-validacion [validacion]="'required'" [texto]="'The code is required.'"
+            [control]="this.formulario.controls['numberUnit']" />
+          </fieldset>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <fieldset>
+            <label>Price Unit <span class="validacion">*</span></label>
+            <input formControlName="priceUnit" type="text" class="form-control" placeholder="priceUnit">
+            <app-validacion [validacion]="'required'" [texto]="'The code is required.'"
+            [control]="this.formulario.controls['priceUnit']" />
+          </fieldset>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <fieldset>
+            <label>Tax <span class="validacion">*</span></label>
+            <input formControlName="tax" type="text" class="form-control" placeholder="tax">
+            <app-validacion [validacion]="'required'" [texto]="'The code is required.'"
+            [control]="this.formulario.controls['tax']" />
+          </fieldset>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <fieldset>
+            <label>Price Total <span class="validacion">*</span></label>
+            <input formControlName="priceTotal" type="text" class="form-control" placeholder="priceTotal">
+            <app-validacion [validacion]="'required'" [texto]="'The code is required.'"
+            [control]="this.formulario.controls['priceTotal']" />
+          </fieldset>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer d-flex">
+    <div class="d-flex justify-content-end">
+      <button type="button" class="boton primario relleno" (click)="create()">
+        Save
+      </button>
+    </div>
+  </div>
+  
+</ng-template>
+<app-popup #popup />

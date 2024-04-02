@@ -1,0 +1,41 @@
+#login{
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  height: 100vh;
+
+}
+#login .container {
+  margin-top: 100px;
+}
+#login .container #login-row #login-column #login-box {
+  margin-top: 40px;
+  max-width: 600px;
+  height: auto;
+  border: 1px solid #0067AA;
+  background-color: #0076BB;
+ /* background-color: rgb(183, 183, 243); */
+  border-radius: 20px;
+}
+#login .container #login-row #login-column #login-box #login-form {
+  padding: 20px;
+}
+#login .container #login-row #login-column #login-box #login-form #register-link {
+  margin-top: -85px;
+}
+
+.input-form {
+  margin: 20px 0px;
+}
+.text-info {
+  color: white !important;
+}
+.btn-login{
+  
+  background-color: #FED103;
+  color: rgb(4, 0, 0);
+}
+
+.ng-invalid.ng-touched:not(form){
+  border: 1px solid red;
+}

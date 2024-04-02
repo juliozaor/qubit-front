@@ -1,0 +1,37 @@
+<ng-template #modal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title fs-14px  fw-bolder">Create Group items</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="formulario">
+      <div class="row mb-3">
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <fieldset>
+            <label>Code <span class="validacion">*</span></label>
+            <input formControlName="code" type="text" class="form-control" placeholder="code">
+            <app-validacion [validacion]="'required'" [texto]="'The code is required.'"
+              [control]="this.formulario.controls['code']" />
+          </fieldset>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <fieldset>
+            <label>Name <span class="validacion">*</span></label>
+            <input formControlName="name" type="text" class="form-control" placeholder="name">
+            <app-validacion [validacion]="'required'" [texto]="'The code is required.'"
+            [control]="this.formulario.controls['name']" />
+          </fieldset>
+        </div>        
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer d-flex">
+    <div class="d-flex justify-content-end">
+      <button type="button" class="boton primario relleno" (click)="create()">
+        Save
+      </button>
+    </div>
+  </div>
+  
+</ng-template>
+<app-popup #popup />

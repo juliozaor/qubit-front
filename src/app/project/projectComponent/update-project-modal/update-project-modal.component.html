@@ -1,0 +1,123 @@
+<ng-template #modal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title fs-14px  fw-bolder">Update Project</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="formulario">
+
+      <div class="row mb-3">
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <fieldset>
+            <label>Code <span class="validacion">*</span></label>
+            <input formControlName="code" type="text" class="form-control" placeholder="code">
+            <app-validacion [validacion]="'required'" [texto]="'The code is required.'"
+              [control]="this.formulario.controls['code']" />
+          </fieldset>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <fieldset>
+            <label>Name <span class="validacion">*</span></label>
+            <input formControlName="name" type="text" class="form-control" placeholder="name">
+            <app-validacion [validacion]="'required'" [texto]="'The code is required.'"
+            [control]="this.formulario.controls['name']" />
+          </fieldset>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <fieldset>
+            <label>Subtitle <span class="validacion">*</span></label>
+            <input formControlName="subtitle" type="text" class="form-control"
+              placeholder="subtitle">
+            <app-validacion [validacion]="'required'" [texto]="'subtitle is required.'"
+              [control]="this.formulario.controls['subtitle']" />
+          </fieldset>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <fieldset class="me-2">
+            <label>Client <span class="validacion">*</span></label>                 
+                <ng-select formControlName="clientId" class="form-select">
+                  <ng-option *ngFor="let client of clients" [value]="client.id">{{ client.names }}</ng-option>
+                 </ng-select>
+                <app-validacion
+                [validacion]="'required'"
+                [texto]="'The client is required.'"
+                [control]="this.formulario.controls['clientId']"
+                />    
+        </fieldset>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <fieldset class="me-2">
+            <label>Type Project <span class="validacion">*</span></label>                 
+                <ng-select formControlName="typeProjectId" class="form-select">
+                  <ng-option *ngFor="let typeProject of typeProjects" [value]="typeProject.id">{{ typeProject.name }}</ng-option>
+                 </ng-select>
+                <app-validacion
+                [validacion]="'required'"
+                [texto]="'The typeProject is required.'"
+                [control]="this.formulario.controls['typeProjectId']"
+                />    
+        </fieldset>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <fieldset class="me-2">
+            <label>Type Application <span class="validacion">*</span></label>                 
+                <ng-select formControlName="typeApplicationId" class="form-select">
+                  <ng-option *ngFor="let typeApplication of typeApplications" [value]="typeApplication.id">{{ typeApplication.name }}</ng-option>
+                 </ng-select>
+                <app-validacion
+                [validacion]="'required'"
+                [texto]="'The typeApplication is required.'"
+                [control]="this.formulario.controls['typeApplicationId']"
+                />    
+        </fieldset>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <fieldset class="me-2">
+            <label>Project Status <span class="validacion">*</span></label>                 
+                <ng-select formControlName="projectStatusId" class="form-select">
+                  <ng-option *ngFor="let projectSt of projectStatus" [value]="projectSt.id">{{ projectSt.name }}</ng-option>
+                 </ng-select>
+                <app-validacion
+                [validacion]="'required'"
+                [texto]="'The projectSt is required.'"
+                [control]="this.formulario.controls['projectStatusId']"
+                />    
+        </fieldset>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <fieldset>
+            <label>conceptnetDrawId <span class="validacion">*</span></label>
+            <input formControlName="conceptnetDrawId" type="number" class="form-control" placeholder="conceptnetDrawId">
+            <app-validacion [validacion]="'required'" [texto]="'The conceptnetDrawId is required.'"
+              [control]="this.formulario.controls['conceptnetDrawId']" />
+          </fieldset>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+                
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <fieldset>
+            <label>Basepath <span class="validacion">*</span></label>
+            <input formControlName="basepath" type="text" class="form-control" placeholder="basepath">
+            <app-validacion [validacion]="'required'" [texto]="'The basepath is required.'"
+              [control]="this.formulario.controls['basepath']" />
+          </fieldset>
+        </div>
+      </div>
+
+    </form>
+  </div>
+  <div class="modal-footer d-flex">
+    <div class="d-flex justify-content-end">
+      <button type="button" class="boton primario relleno" (click)="update()">
+        Update
+      </button>
+    </div>
+  </div>
+  
+</ng-template>
+<app-popup #popup />

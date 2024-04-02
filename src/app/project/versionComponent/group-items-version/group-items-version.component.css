@@ -1,0 +1,13 @@
+.groupsItem{
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  list-style:none
+}
+
+.groupsItem:first-child{
+  border-top: 1px solid #E6EFFD;
+}
+.groupsItem>li{
+  border-bottom: 1px solid #E6EFFD;
+}

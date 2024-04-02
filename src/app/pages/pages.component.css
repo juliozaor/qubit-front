@@ -1,0 +1,48 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+mat-toolbar {
+  background-color: white;
+  color: black;
+  border-bottom: 1px solid #d8dbe0;
+}
+mat-sidenav-container {
+  height: calc(100vh - 0px);
+}
+mat-sidenav {
+background-color: rgb(21, 40, 75);
+color: rgba(255, 255, 255, 0.6);
+}
+.logo {
+  width: 200px;
+  height: auto;
+ /*  margin: 20px 20px 25px; */
+  
+}
+.menu-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  font-size: 1rem;
+  mat-icon, span, a{
+    margin-right: 8px;
+    color: rgba(255, 255, 255, 0.6);
+  }
+}
+.menu-button:hover {
+  background-color: rgb(0, 154,218);
+  color: white!important;
+}
+.active{
+  background-color: rgb(0, 154,218);
+  color: white!important;
+}
+.menu-button[_ngcontent-ng-c596620259] [_ngcontent-ng-c596620259]:is(mat-icon, span[_ngcontent-ng-c596620259], a)[_ngcontent-ng-c596620259] {
+  color: white;
+}
+a {
+  text-decoration: none;
+  padding-left: 30px;
+}
