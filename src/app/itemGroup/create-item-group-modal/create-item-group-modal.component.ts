@@ -15,14 +15,14 @@ export class CreateItemGroupModalComponent {
   @ViewChild('modal') modal!: ElementRef;
   @ViewChild('popup') popup!: PopupComponent
   @Output('createdItem') createdItem: EventEmitter<void>;
-  formulario: FormGroup;
+  form: FormGroup;
   item?: ItemGroupModel;
   constructor(
     private serviceModal: NgbModal,
     private serviceItem: ItemGroupService,
   ) {
     this.createdItem = new EventEmitter<void>();
-    this.formulario = new FormGroup({
+    this.form = new FormGroup({
       code: new FormControl('', [Validators.required]),
       name: new FormControl('', [Validators.required]),
     });
@@ -35,11 +35,11 @@ export class CreateItemGroupModalComponent {
   }
 
   create() {
-    if (this.formulario.invalid) {
-      markFormAsDirty(this.formulario);
+    if (this.form.invalid) {
+      markFormAsDirty(this.form);
       return;
     }
-    const controls = this.formulario.controls;
+    const controls = this.form.controls;
     this.serviceItem
       .setItem({
         code: controls['code'].value,
@@ -48,7 +48,8 @@ export class CreateItemGroupModalComponent {
       .subscribe({
         next: () => {
            this.createdItem.emit();
-           this.closeModal()
+           this.clearForm();
+           this.closeModal();
         },
         error: () => {
            this.popup.abrirPopupFallido("Error updating group item", "Try again later.")
@@ -56,7 +57,9 @@ export class CreateItemGroupModalComponent {
       });
   }
 
-  
+  clearForm(){
+    this.form.reset()
+  }
 
   closeModal() {
     this.serviceModal.dismissAll();

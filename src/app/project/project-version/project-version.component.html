@@ -1,5 +1,10 @@
 <div class="p-5">
-  <h2 class="texto-primario fw-semibold mb-3">Project Versions</h2>
+  <div class="d-flex justify-content-between texto-primario mb-3 title-y">
+    <h2 class="fw-semibold">Project Versions : {{ name }}</h2>
+        <button type="submit" class="btn btn-outline-danger" (click)="back()">
+        Go back
+      </button>
+</div>
 
   <div class="d-flex mb-3 flex-gap-20">
       <fieldset class="me-2">
@@ -17,7 +22,7 @@
   </div>
   <div class="d-flex mb-3 justify-content-end me-5"> 
     <fieldset class="d-flex align-items-end me-2">
-        <button class="boton btn btn-success  d-flex align-items-center" (click)="modalCreate()"><mat-icon>add</mat-icon> New Version Project</button>
+        <button class="boton btn btn-success  d-flex align-items-center" (click)="modalCreate()"><mat-icon class="iconCreate">add</mat-icon> New Project Version</button>
     </fieldset>
   </div>
   <div class="table-responsive mb-3">
@@ -52,17 +57,17 @@
                   <td>{{ version.quoteName }}</td>
                   <td>{{ version.conceptnetDrawId }}</td>
                   <td width="10px">
-                      <span class="cursor-pointer" (click)="modalUpdate(version)" ><mat-icon>edit</mat-icon> </span>
+                      <span class="cursor-pointer" (click)="update(version.id!)" ><mat-icon class="iconEdit">edit</mat-icon> </span>
                   </td>
                   <td width="10px">
                     <span class="cursor-pointer" (click)="openGroups(version.id!)" >Group Items</span>
                 </td>
                   <td width="10px">
-                    <!-- <span class="cursor-pointer" (click)="cloneVersion(version.id!)">clone</span> -->
+                    <span class="cursor-pointer" (click)="cloneVersion(version.id!)">clone</span>
                 </td>
               </tr>
               <tr *ngIf="versionProjects?.length === 0">
-                  <td colspan="6">No group version Projects were found with the established filters.</td>
+                  <td colspan="6">No group project version were found with the established filters.</td>
               </tr>
           </tbody>
       </table>

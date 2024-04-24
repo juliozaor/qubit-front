@@ -1,0 +1,37 @@
+<ng-template #modal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title fs-14px  fw-bolder">Clone Project : {{ name }}</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="form">
+
+        <p class="text-description">If you want to clone the project with a version, select it from the list and click the clone button.
+            If you want to clone the project without versions, just click on the clone button.</p>
+  
+        <div class="row mb-3">
+          
+          <div class="col-sm-12 col-md-6 col-lg-3">
+            <fieldset class="me-2">
+              <label>Versions </label>                 
+                  <ng-select formControlName="versionId" class="form-select">
+                    <ng-option *ngFor="let version of versions" [value]="version.id">{{ version.version }}</ng-option>
+                   </ng-select>
+          </fieldset>
+          </div>
+        </div>
+  
+       
+  
+      </form>
+    </div>
+    <div class="modal-footer d-flex">
+      <div class="d-flex justify-content-end">
+        <button type="button" class="boton primario relleno" (click)="clone()">
+          Clone
+        </button>
+      </div>
+    </div>
+    
+  </ng-template>
+  <app-popup #popup />

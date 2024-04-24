@@ -17,7 +17,8 @@ import { GroupItemsVersionComponent } from './versionComponent/group-items-versi
 import { ItemsVersionComponent } from './versionComponent/items-version/items-version.component';
 import { CreateItemsVersionModalComponent } from './versionComponent/create-items-version-modal/create-items-version-modal.component';
 import { UpdateItemsVersionModalComponent } from './versionComponent/update-items-version-modal/update-items-version-modal.component';
-
+import { CloneProjectComponent } from './projectComponent/clone-project/clone-project.component';
+import { UpdateVersionComponent } from './versionComponent/update-version/update-version.component';
 
 
 @NgModule({
@@ -31,7 +32,9 @@ import { UpdateItemsVersionModalComponent } from './versionComponent/update-item
     GroupItemsVersionComponent,
     ItemsVersionComponent,
     CreateItemsVersionModalComponent,
-    UpdateItemsVersionModalComponent
+    UpdateItemsVersionModalComponent,
+    CloneProjectComponent,
+    UpdateVersionComponent
   ],
   imports: [
     CommonModule,

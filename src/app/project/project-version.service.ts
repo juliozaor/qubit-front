@@ -38,6 +38,12 @@ export class ProjectVersionService {
         `${this.urlBackend}${endpoint}`, { headers: this.headers })
   }
 
+  getProjectVersion(id: number){
+    let endpoint = `${this.rute}/${id}`   
+    return this.http.get<any>(
+        `${this.urlBackend}${endpoint}`, { headers: this.headers })
+  }
+
   updateProjectVersion(projectVersion: ProjectVersionModel){
     return this.http.put(`${this.urlBackend}${this.rute}`, projectVersion, { headers: this.headers } )
   }
@@ -48,14 +54,24 @@ export class ProjectVersionService {
         `${this.urlBackend}${endpoint}`, { headers: this.headers })
   }
 
-  getProjectVersionByProject(id:number, page: number, limit: number, filters?: Filters){
-    let endpoint = `${this.rute}/project/${id}?page=${page}&limit=${limit}`
+  getProjectVersionByProject(id:number, page?: number, limit?: number, filters?: Filters){
+    let endpoint = `${this.rute}/project/${id}`
+    if(page && limit){
+      endpoint+=`?page=${page}&limit=${limit}`
+    }
     /* if(filters){
         if(filters.term){
             endpoint+=`&term=${filters.term}`
         }
     } */
     return this.http.get<{versionProjects: ProjectVersionModel[], pagination: Pagination}>(
+        `${this.urlBackend}${endpoint}`, { headers: this.headers })
+  }
+
+  
+  cloneVersionProjectByNewProject(id: number, projectId: number){
+    let endpoint = `${this.rute}/clone-project/${id}/${projectId}`
+    return this.http.get<ProjectVersionModel>(
         `${this.urlBackend}${endpoint}`, { headers: this.headers })
   }
 

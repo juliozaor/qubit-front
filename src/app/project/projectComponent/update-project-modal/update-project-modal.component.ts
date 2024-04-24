@@ -11,6 +11,8 @@ import { ProjectService } from '../../project.service';
 import { MastersService } from '../../../services/masters.service';
 import { ClientService } from '../../../client/client.service';
 import { markFormAsDirty } from '../../../utilidades/Utilidades';
+import { ConceptDrawModel } from '../../../models/conceptDraw.model';
+import { ConcepDrawService } from '../../../conceptDraw/concep-draw.service';
 
 @Component({
   selector: 'app-update-project-modal',
@@ -21,20 +23,22 @@ export class UpdateProjectModalComponent {
   @ViewChild('modal') modal!: ElementRef;
   @ViewChild('popup') popup!: PopupComponent
   @Output('updatedProject') updatedProject: EventEmitter<void>;
-  formulario: FormGroup;
+  form: FormGroup;
   project?: ProjectModel;
   projectStatus: ProjectStatusModel[] = [];
   clients: ClientModel[] = [];
   typeProjects: TypeProjectModel[] = [];
   typeApplications: TypeApplicationModel[] = [];
+  conceptDraws: ConceptDrawModel[] = [];
   constructor(
     private serviceModal: NgbModal,
     private serviceProject: ProjectService,
     private serviceMaster: MastersService,
-    private serviceClient: ClientService
+    private serviceClient: ClientService,
+    private serviceConcept: ConcepDrawService,
   ) {
     this.updatedProject = new EventEmitter<void>();
-    this.formulario = new FormGroup({
+    this.form = new FormGroup({
       code: new FormControl('', [Validators.required]),
       name: new FormControl('', [Validators.required]),
       subtitle: new FormControl('', [Validators.required]),
@@ -52,6 +56,7 @@ export class UpdateProjectModalComponent {
     this.getClients();
     this.getTypeApplications();
     this.getTypeProjects();
+    this.getConceptDraws();
   }
 
   openModal(project:ProjectModel) {
@@ -63,7 +68,7 @@ export class UpdateProjectModalComponent {
   }
 
   fillForm(item:ProjectModel){
-    const controls = this.formulario.controls
+    const controls = this.form.controls
     controls['code'].setValue(item.code)
     controls['name'].setValue(item.name)
     controls['subtitle'].setValue(item.subtitle)
@@ -76,11 +81,11 @@ export class UpdateProjectModalComponent {
   }
 
   update() {
-    if (this.formulario.invalid) {
-      markFormAsDirty(this.formulario);
+    if (this.form.invalid) {
+      markFormAsDirty(this.form);
       return;
     }
-    const controls = this.formulario.controls;
+    const controls = this.form.controls;
     this.serviceProject
       .updateProject({
         id: this.project?.id,
@@ -134,6 +139,13 @@ export class UpdateProjectModalComponent {
     });
   }
   
+  getConceptDraws() {
+    this.serviceConcept.getConceptDraws(1,100000).subscribe({
+      next: (resp) => {
+        this.conceptDraws = resp.conceptDraws;
+      },
+    });
+  }
 
   closeModal() {
     this.serviceModal.dismissAll();

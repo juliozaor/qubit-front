@@ -5,13 +5,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProjectVersionComponent } from './project-version/project-version.component';
 import { GroupItemsVersionComponent } from './versionComponent/group-items-version/group-items-version.component';
 import { ItemsVersionComponent } from './versionComponent/items-version/items-version.component';
+import { UpdateVersionComponent } from './versionComponent/update-version/update-version.component';
 
 const routes: Routes = [
   {
     path: '',
     component: ProjectComponent
   },{
-    path: 'versions/:projectId',
+    path: 'versions/:projectId/:name',
     component: ProjectVersionComponent
   },{
     path: 'groupItems/:projectVersionId',
@@ -19,6 +20,9 @@ const routes: Routes = [
   },{
     path: 'itemsVersion/:groupId',
     component: ItemsVersionComponent
+  },{
+    path: 'updateVersion/:versionId/:name/:projectId',
+    component: UpdateVersionComponent
   }
 ];
 

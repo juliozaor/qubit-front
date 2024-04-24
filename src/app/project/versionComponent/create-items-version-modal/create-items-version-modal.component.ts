@@ -57,9 +57,30 @@ export class CreateItemsVersionModalComponent {
           priceUnit: itemSelect.basePrice,
           tax: itemSelect.baseTax
         });
+        this.calculateTotalPrice();
       }
     });
-    
+
+    this.formulario.get('priceTotal')!.disable();
+    this.formulario.get('numberUnit')!.valueChanges.subscribe(() => {
+      this.calculateTotalPrice();
+    });
+    this.formulario.get('priceUnit')!.valueChanges.subscribe(() => {
+      this.calculateTotalPrice();
+    });
+    this.formulario.get('tax')!.valueChanges.subscribe(() => {
+      this.calculateTotalPrice();
+    });
+  }
+
+  calculateTotalPrice() {
+    const pUnit = parseFloat(this.formulario.get('priceUnit')!.value);
+    const nUnit = parseFloat(this.formulario.get('numberUnit')!.value);
+    const taxU = parseFloat(this.formulario.get('tax')!.value);
+
+    const pTotal = (pUnit * nUnit) + taxU;
+
+    this.formulario.get('priceTotal')!.setValue(pTotal);
   }
 
   create() {
@@ -92,9 +113,7 @@ export class CreateItemsVersionModalComponent {
   getItems(){    
     this.serviceItem.getItems(1,10000).subscribe({
       next: (resp) => {
-        this.items = resp.items
-        console.log(resp);
-        
+        this.items = resp.items        
       }
     })
   }

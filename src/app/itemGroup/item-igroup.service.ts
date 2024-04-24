@@ -53,5 +53,11 @@ export class ItemIGroupService {
         `${this.urlBackend}${endpoint}`, { headers: this.headers })
   }
 
+  updategroupItems(id:number){
+    let endpoint = `${this.rute}/group/${id}`
+    return this.http.put<{message: string}>(
+        `${this.urlBackend}${endpoint}`, { headers: this.headers })
+  }
+
 
 }

@@ -1,26 +1,26 @@
 <ng-template #modal let-modal>
   <div class="modal-header">
-    <h4 class="modal-title fs-14px  fw-bolder">Update Project</h4>
+    <h4 class="modal-title fs-14px  fw-bolder">Update Project Version : {{ name }}</h4>
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body">
-    <form [formGroup]="formulario">
+    <form [formGroup]="form">
       <div class="row mb-3">
         <div class="col-sm-12 col-md-6 col-lg-3">
             <fieldset>
                 <label>Version <span class="validacion">*</span></label>
                 <input formControlName="version" type="text" class="form-control" placeholder="Version">
                 <app-validacion [validacion]="'required'" [texto]="'The version is required.'"
-                  [control]="this.formulario.controls['version']"></app-validacion>
+                  [control]="this.form.controls['version']"></app-validacion>
              </fieldset>
         </div>
         
         <div class="col-sm-12 col-md-6 col-lg-3">
             <fieldset>
                 <label>Revised Date <span class="validacion">*</span></label>
-                <input formControlName="revisedDate" type="date" class="form-control" placeholder="Revised Date">
+                <input formControlName="revisedDate" type="datetime-local" class="form-control" placeholder="Revised Date">
                 <app-validacion [validacion]="'required'" [texto]="'The revised date is required.'"
-                  [control]="this.formulario.controls['revisedDate']"></app-validacion>
+                  [control]="this.form.controls['revisedDate']"></app-validacion>
              </fieldset>
         </div>
         
@@ -29,7 +29,7 @@
                 <label>Executive Summary <span class="validacion">*</span></label>
                 <textarea formControlName="executiveSummary" class="form-control" placeholder="Executive Summary"></textarea>
                 <app-validacion [validacion]="'required'" [texto]="'The executive summary is required.'"
-                  [control]="this.formulario.controls['executiveSummary']"></app-validacion>
+                  [control]="this.form.controls['executiveSummary']"></app-validacion>
              </fieldset>
         </div>
         
@@ -38,7 +38,7 @@
                 <label>Scope Work <span class="validacion">*</span></label>
                 <textarea formControlName="scopeWork" class="form-control" placeholder="Scope Work"></textarea>
                 <app-validacion [validacion]="'required'" [texto]="'The scope work is required.'"
-                  [control]="this.formulario.controls['scopeWork']"></app-validacion>
+                  [control]="this.form.controls['scopeWork']"></app-validacion>
              </fieldset>
         </div>
         </div>
@@ -49,7 +49,7 @@
                 <label>Trading Conditions <span class="validacion">*</span></label>
                 <textarea formControlName="tradingConditions" class="form-control" placeholder="Trading Conditions"></textarea>
                 <app-validacion [validacion]="'required'" [texto]="'The trading conditions are required.'"
-                  [control]="this.formulario.controls['tradingConditions']"></app-validacion>
+                  [control]="this.form.controls['tradingConditions']"></app-validacion>
              </fieldset>
         </div>
         
@@ -58,7 +58,7 @@
                 <label>Comment Clarifications <span class="validacion">*</span></label>
                 <textarea formControlName="commentClarifications" class="form-control" placeholder="Comment Clarifications"></textarea>
                 <app-validacion [validacion]="'required'" [texto]="'The comment clarifications are required.'"
-                  [control]="this.formulario.controls['commentClarifications']"></app-validacion>
+                  [control]="this.form.controls['commentClarifications']"></app-validacion>
              </fieldset>
         </div>
         
@@ -67,7 +67,7 @@
                 <label>Payment Terms <span class="validacion">*</span></label>
                 <textarea formControlName="paymentTerms" class="form-control" placeholder="Payment Terms"></textarea>
                 <app-validacion [validacion]="'required'" [texto]="'The payment terms are required.'"
-                  [control]="this.formulario.controls['paymentTerms']"></app-validacion>
+                  [control]="this.form.controls['paymentTerms']"></app-validacion>
              </fieldset>
         </div>
         
@@ -76,7 +76,7 @@
                 <label>Quote Path <span class="validacion">*</span></label>
                 <input formControlName="quotePath" type="text" class="form-control" placeholder="Quote Path">
                 <app-validacion [validacion]="'required'" [texto]="'The quote path is required.'"
-                  [control]="this.formulario.controls['quotePath']"></app-validacion>
+                  [control]="this.form.controls['quotePath']"></app-validacion>
              </fieldset>
         </div>
         </div>
@@ -87,17 +87,22 @@
                 <label>Quote Name <span class="validacion">*</span></label>
                 <input formControlName="quoteName" type="text" class="form-control" placeholder="Quote Name">
                 <app-validacion [validacion]="'required'" [texto]="'The quote name is required.'"
-                  [control]="this.formulario.controls['quoteName']"></app-validacion>
+                  [control]="this.form.controls['quoteName']"></app-validacion>
              </fieldset>
         </div>
         
         <div class="col-sm-12 col-md-6 col-lg-3">
-            <fieldset>
-                <label>Conceptnet Draw ID <span class="validacion">*</span></label>
-                <input formControlName="conceptnetDrawId" type="number" class="form-control" placeholder="Conceptnet Draw ID">
-                <app-validacion [validacion]="'required'" [texto]="'The conceptnet draw ID is required.'"
-                  [control]="this.formulario.controls['conceptnetDrawId']"></app-validacion>
-             </fieldset>
+          <fieldset class="me-2">
+            <label>Concept Draw <span class="validacion">*</span></label>                 
+                <ng-select formControlName="conceptnetDrawId" class="form-select">
+                  <ng-option *ngFor="let conceptDraw of conceptDraws" [value]="conceptDraw.id">{{ conceptDraw.name }}</ng-option>
+                 </ng-select>
+                <app-validacion
+                [validacion]="'required'"
+                [texto]="'The conceptDraw is required.'"
+                [control]="this.form.controls['conceptnetDrawId']"
+                />    
+        </fieldset>
         </div>
         </div>
 

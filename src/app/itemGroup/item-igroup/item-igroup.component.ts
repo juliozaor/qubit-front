@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Pager } from '../../compartido/modelos/Pager';
 import { Filters } from '../../compartido/modelos/Filters';
 import { ItemIGroupService } from '../item-igroup.service';
@@ -10,6 +10,8 @@ import { PopupComponent } from '../../alertas/componentes/popup/popup.component'
 import { CreateItemIGroupModalComponent } from '../create-item-igroup-modal/create-item-igroup-modal.component';
 import { UpdateItemIGroupModalComponent } from '../update-item-igroup-modal/update-item-igroup-modal.component';
 import { ItemIGroupModel } from '../../models/itemIGroup.model';
+
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-item-igroup',
@@ -26,7 +28,7 @@ export class ItemIGroupComponent {
   groupItems: any
   nameGroup?: string = ''
   items?:any[]
-  constructor(private routeActive: ActivatedRoute, private service: ItemIGroupService, private serviceGroup: ItemGroupService){
+  constructor(private routeActive: ActivatedRoute, private service: ItemIGroupService, private serviceGroup: ItemGroupService, private route:Router){
     this.routeActive.params.subscribe(params => {
       this.groupId = params['groupId'];        
     });
@@ -54,6 +56,41 @@ export class ItemIGroupComponent {
 
   modalCreate() {
     this.modalCreateItem.openModal(this.groupId!);
+  }
+
+  updateItems(){
+    Swal.fire({
+      //title: "Actualización",
+      text: "Are you sure to update the items?. The items will be updated to their base prices and base tax",
+      icon: "info",
+      showCancelButton: true,
+      allowOutsideClick: false,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Update",
+      cancelButtonText:"Cancel"
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        Swal.fire({
+          icon:'info',
+          allowOutsideClick: false,      
+          text: 'Please wait...',
+        });
+        Swal.showLoading();
+
+        this.service.updategroupItems(this.groupId!)
+        .subscribe({
+          next: (resp) => {
+            Swal.close();
+            this.pager.refrescar();
+          },
+        });
+
+      }
+     
+      
+    });
   }
 
 
@@ -88,6 +125,10 @@ export class ItemIGroupComponent {
         this.popup.abrirPopupExitoso('item delete successfully.');
       },
     });
+  }
+
+  back(){
+    this.route.navigate(['/dashboard/items-group']);
   }
 
 }

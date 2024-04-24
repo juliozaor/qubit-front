@@ -43,4 +43,11 @@ export class ProjectService {
   }
 
 
+  cloneProject(id: number){
+    let endpoint = `${this.rute}/clone/${id}`
+    return this.http.get<ProjectModel>(
+        `${this.urlBackend}${endpoint}`, { headers: this.headers })
+  }
+
+
 }

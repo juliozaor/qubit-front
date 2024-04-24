@@ -17,7 +17,7 @@
   </div>
   <div class="d-flex mb-3 justify-content-end me-5"> 
     <fieldset class="d-flex align-items-end me-2">
-        <button class="boton btn btn-success  d-flex align-items-center" (click)="modalCreate()"><mat-icon>add</mat-icon> New Group items</button>
+        <button class="boton btn btn-success  d-flex align-items-center" (click)="modalCreate()"><mat-icon class="iconCreate">add</mat-icon> New Group items</button>
     </fieldset>
   </div>
   <div class="table-responsive mb-3">
@@ -36,7 +36,7 @@
                   <td>{{ item.name }}</td>
                   <td>{{ item.code }}</td>
                   <td width="10px">
-                      <span class="cursor-pointer" (click)="modalUpdate(item)" ><mat-icon>edit</mat-icon> </span>
+                      <span class="cursor-pointer" (click)="modalUpdate(item)" ><mat-icon class="iconEdit">edit</mat-icon> </span>
                   </td>
                   <td width="10px">
                     <span class="cursor-pointer" (click)="openItems(item.id!)" >Items</span>

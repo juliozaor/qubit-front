@@ -145,10 +145,10 @@
                   <td>{{ usuario.name }}</td>
                   <td>{{ usuario.mail }}</td>
                   <td width="10px">
-                      <span class="cursor-pointer" (click)="abrirModalActualizarUsuario(usuario)"><mat-icon>edit</mat-icon> </span>
+                      <span class="cursor-pointer" (click)="abrirModalActualizarUsuario(usuario)"><mat-icon class="iconEdit">edit</mat-icon> </span>
                   </td>
                   <!-- <td width="10px">
-                    <span class="cursor-pointer" (click)="cambiarEstado(usuario.usuario)"><mat-icon>delete</mat-icon> </span>
+                    <span class="cursor-pointer" (click)="cambiarEstado(usuario.usuario)"><mat-icon class="iconDelete">delete</mat-icon> </span>
                 </td> -->
               </tr>
               <tr *ngIf="usuarios.length === 0">

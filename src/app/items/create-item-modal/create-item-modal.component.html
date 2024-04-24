@@ -4,14 +4,14 @@
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body">
-    <form [formGroup]="formulario">
+    <form [formGroup]="form">
       <div class="row mb-3">
         <div class="col-sm-12 col-md-6 col-lg-3">
           <fieldset>
             <label>Code <span class="validacion">*</span></label>
             <input formControlName="code" type="text" class="form-control" placeholder="code">
             <app-validacion [validacion]="'required'" [texto]="'The code is required.'"
-              [control]="this.formulario.controls['code']" />
+              [control]="this.form.controls['code']" />
           </fieldset>
         </div>
         <div class="col-sm-12 col-md-6 col-lg-3">
@@ -19,7 +19,7 @@
             <label>Name <span class="validacion">*</span></label>
             <input formControlName="name" type="text" class="form-control" placeholder="name">
             <app-validacion [validacion]="'required'" [texto]="'The code is required.'"
-            [control]="this.formulario.controls['name']" />
+            [control]="this.form.controls['name']" />
           </fieldset>
         </div>
         <div class="col-sm-12 col-md-6 col-lg-3">
@@ -28,7 +28,7 @@
             <input formControlName="description" type="text" class="form-control"
               placeholder="description">
             <app-validacion [validacion]="'required'" [texto]="'description is required.'"
-              [control]="this.formulario.controls['description']" />
+              [control]="this.form.controls['description']" />
           </fieldset>
         </div>
         <div class="col-sm-12 col-md-6 col-lg-3">
@@ -40,7 +40,7 @@
                 <app-validacion
                 [validacion]="'required'"
                 [texto]="'The item type is required.'"
-                [control]="this.formulario.controls['typeUnitId']"
+                [control]="this.form.controls['typeUnitId']"
                 />    
         </fieldset>
         </div>
@@ -51,7 +51,7 @@
             <label>Base Price <span class="validacion">*</span></label>
             <input formControlName="basePrice" type="number" class="form-control" placeholder="basePrice">
             <app-validacion [validacion]="'required'" [texto]="'basePrice is required.'"
-              [control]="this.formulario.controls['basePrice']" />
+              [control]="this.form.controls['basePrice']" />
              
           </fieldset>
           
@@ -61,7 +61,7 @@
             <label>Base Tax <span class="validacion">*</span></label>
             <input formControlName="baseTax" type="text" class="form-control" placeholder="baseTax">
             <app-validacion [validacion]="'required'" [texto]="'baseTax is required.'"
-            [control]="this.formulario.controls['baseTax']" />
+            [control]="this.form.controls['baseTax']" />
           </fieldset>
         </div>
       </div>
@@ -75,7 +75,7 @@
                 <app-validacion
                 [validacion]="'required'"
                 [texto]="'Unit type is required.'"
-                [control]="this.formulario.controls['typeUnitId']"
+                [control]="this.form.controls['typeUnitId']"
                 />    
         </fieldset>
         </div>

@@ -11,6 +11,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProjectVersionService } from '../../project-version.service';
 import { ProjectVersionModel } from '../../../models/projectVersion.model';
 import { markFormAsDirty } from '../../../utilidades/Utilidades';
+import { ConceptDrawModel } from '../../../models/conceptDraw.model';
+import { ConcepDrawService } from '../../../conceptDraw/concep-draw.service';
+import { OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-update-version-modal',
@@ -21,16 +24,19 @@ export class UpdateVersionModalComponent {
   @ViewChild('modal') modal!: ElementRef;
   @ViewChild('popup') popup!: PopupComponent;
   @Output('updatedVersion') updatedVersion: EventEmitter<void>;
-  formulario: FormGroup;
+  form: FormGroup;
   projectVersion?: ProjectVersionModel;
+  name?:string;
+  conceptDraws: ConceptDrawModel[] = [];
   constructor(
     private serviceModal: NgbModal,
-    private service: ProjectVersionService
+    private service: ProjectVersionService,    
+    private serviceConcept: ConcepDrawService,
   ) {
     this.updatedVersion = new EventEmitter<void>();
-    this.formulario = new FormGroup({
+    this.form = new FormGroup({
       version: new FormControl('', [Validators.required]),
-      /* revisedDate: new FormControl('', [Validators.required]), */
+      revisedDate: new FormControl('', [Validators.required]),
       executiveSummary: new FormControl('', [Validators.required]),
       scopeWork: new FormControl('', [Validators.required]),
       tradingConditions: new FormControl('', [Validators.required]),
@@ -40,9 +46,12 @@ export class UpdateVersionModalComponent {
       quoteName: new FormControl('', [Validators.required]),
       conceptnetDrawId: new FormControl('', [Validators.required]),
     });
+    this.getConceptDraws();
   }
-  openModal(projectVersion: ProjectVersionModel) {
+
+  openModal(projectVersion: ProjectVersionModel, name:string) {
     this.projectVersion = projectVersion;
+    this.name = name;
     this.fillForm(projectVersion);
     this.serviceModal.open(this.modal, {
       size: 'xl',
@@ -50,9 +59,13 @@ export class UpdateVersionModalComponent {
   }
 
   fillForm(projectVersion: ProjectVersionModel) {
-    const controls = this.formulario.controls;
+
+    const controls = this.form.controls;
+    const fecha = new Date(projectVersion.revisedDate?.toString()!);
+    const fechaFormateada = fecha.toISOString().slice(0, 16);
+    controls['revisedDate'].setValue(fechaFormateada);
+
     controls['version'].setValue(projectVersion.version);
-   /*  controls['revisedDate'].setValue(projectVersion.revisedDate); */
     controls['executiveSummary'].setValue(projectVersion.executiveSummary);
     controls['scopeWork'].setValue(projectVersion.scopeWork);
     controls['tradingConditions'].setValue(projectVersion.tradingConditions);
@@ -66,16 +79,16 @@ export class UpdateVersionModalComponent {
   }
 
   update() {
-    if (this.formulario.invalid) {
-      markFormAsDirty(this.formulario);
+    if (this.form.invalid) {
+      markFormAsDirty(this.form);
       return;
     }
-    const controls = this.formulario.controls;
+    const controls = this.form.controls;
     this.service
       .updateProjectVersion({
         id: this.projectVersion?.id,
         version: controls['version'].value,
-        /* revisedDate: controls['revisedDate'].value, */
+        revisedDate: controls['revisedDate'].value,
         executiveSummary: controls['executiveSummary'].value,
         scopeWork: controls['scopeWork'].value,
         tradingConditions: controls['tradingConditions'].value,
@@ -98,6 +111,21 @@ export class UpdateVersionModalComponent {
           );
         },
       });
+  }
+
+  getConceptDraws() {
+    console.log("Entro");
+    
+    this.serviceConcept.getConceptDraws(1,100000).subscribe({
+      next: (resp) => {
+        this.conceptDraws = resp.conceptDraws;
+      },
+    });
+  }
+
+  clearForm(){
+    this.form.reset()
+    this.form.get('conceptnetDrawId')!.setValue("")
   }
 
 

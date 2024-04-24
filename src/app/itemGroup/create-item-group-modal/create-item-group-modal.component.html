@@ -4,14 +4,14 @@
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body">
-    <form [formGroup]="formulario">
+    <form [formGroup]="form">
       <div class="row mb-3">
         <div class="col-sm-12 col-md-6 col-lg-3">
           <fieldset>
             <label>Code <span class="validacion">*</span></label>
             <input formControlName="code" type="text" class="form-control" placeholder="code">
             <app-validacion [validacion]="'required'" [texto]="'The code is required.'"
-              [control]="this.formulario.controls['code']" />
+              [control]="this.form.controls['code']" />
           </fieldset>
         </div>
         <div class="col-sm-12 col-md-6 col-lg-3">
@@ -19,7 +19,7 @@
             <label>Name <span class="validacion">*</span></label>
             <input formControlName="name" type="text" class="form-control" placeholder="name">
             <app-validacion [validacion]="'required'" [texto]="'The code is required.'"
-            [control]="this.formulario.controls['name']" />
+            [control]="this.form.controls['name']" />
           </fieldset>
         </div>        
       </div>

@@ -314,3 +314,21 @@ al2-html-container {
   color: #000000;
   padding: 10px;
 }
+
+.iconEdit{
+color: green;
+}
+
+
+
+.iconDelete{
+  color:red
+}
+
+.title-y{
+  max-height: 50px;  
+}
+.text-description{
+  padding: 20px;
+  background: #eb7f7f66;
+}

@@ -60,4 +60,29 @@ export class ItemIGroupVersionItemService {
         `${this.urlBackend}${endpoint}`, { headers: this.headers })
   }
 
+  deleteGroupIItems(groupId: number, projectId: number){
+    let endpoint = `${this.rute}/group/${groupId}/${projectId}`
+    return this.http.delete<{message: string}>(
+        `${this.urlBackend}${endpoint}`, { headers: this.headers })
+  }
+
+  deleteGroupItem(id: number){
+    let endpoint = `${this.rute}/${id}`
+    return this.http.delete<{message: string}>(
+        `${this.urlBackend}${endpoint}`, { headers: this.headers })
+  }
+
+  cloneGroupItemVersion(idOld: number, idNew: number){
+    let endpoint = `${this.rute}/clone/${idOld}/${idNew}`
+    return this.http.get<{message: string}>(
+        `${this.urlBackend}${endpoint}`, { headers: this.headers })
+  }
+
+  updateVersionByGroups(id:number, projectId: number){    
+    let endpoint = `${this.rute}/group/${id}/${projectId}`   
+    return this.http.put<{groupIItemVersions: {}, pagination: Pagination}>(
+        `${this.urlBackend}${endpoint}`, { headers: this.headers })
+  }
+
+
 }

@@ -43,6 +43,12 @@ const routes: Routes = [
           import('./client/client.module').then(
             (m) => m.ClientModule
             ),
+      },{
+        path: 'concept-draw',
+        loadChildren: () =>
+          import('./conceptDraw/concep-draw.module').then(
+            (m) => m.ConcepDrawModule
+            ),
       },
       { path: 'home', component: HomeComponent },
       { path: 'editor', component: EditorComponent },

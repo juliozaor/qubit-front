@@ -1,0 +1,123 @@
+<ng-template #modal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title fs-14px  fw-bolder">Update Concept Draws</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="formulario">
+
+      <div class="row mb-3">
+        <div class="col-sm-12 col-md-6 col-lg-4">
+          <fieldset>
+            <label>Code <span class="validacion">*</span></label>
+            <input formControlName="code" type="text" class="form-control" placeholder="code">
+            <app-validacion [validacion]="'required'" [texto]="'The code is required.'"
+              [control]="this.formulario.controls['code']" />
+          </fieldset>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-4">
+          <fieldset>
+            <label>Name <span class="validacion">*</span></label>
+            <input formControlName="name" type="text" class="form-control" placeholder="name">
+            <app-validacion [validacion]="'required'" [texto]="'The code is required.'"
+            [control]="this.formulario.controls['name']" />
+          </fieldset>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-4">
+          <fieldset class="me-2">
+            <label>Client <span class="validacion">*</span></label>                 
+                <ng-select formControlName="clientId" class="form-select">
+                  <ng-option *ngFor="let client of clients" [value]="client.id">{{ client.names }}</ng-option>
+                 </ng-select>
+                <app-validacion
+                [validacion]="'required'"
+                [texto]="'The client is required.'"
+                [control]="this.formulario.controls['clientId']"
+                />    
+        </fieldset>
+        </div>
+      </div>
+
+      <div class="row mb-3">        
+        <div class="col-sm-12 col-md-6 col-lg-4">
+          <fieldset class="me-2">
+            <label>TypeApplication <span class="validacion">*</span></label>                 
+                <ng-select formControlName="typeApplicationId" class="form-select">
+                  <ng-option *ngFor="let typeApplication of typeApplications" [value]="typeApplication.id">{{ typeApplication.name }}</ng-option>
+                 </ng-select>
+                <app-validacion
+                [validacion]="'required'"
+                [texto]="'The client is required.'"
+                [control]="this.formulario.controls['typeApplicationId']"
+                />    
+        </fieldset>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-4">
+          <fieldset class="me-2">
+            <label>Type Project <span class="validacion">*</span></label>                 
+                <ng-select formControlName="typeProjectId" class="form-select">
+                  <ng-option *ngFor="let typeProject of typeProjects" [value]="typeProject.id">{{ typeProject.name }}</ng-option>
+                 </ng-select>
+                <app-validacion
+                [validacion]="'required'"
+                [texto]="'The typeProject is required.'"
+                [control]="this.formulario.controls['typeProjectId']"
+                />    
+        </fieldset>
+        </div>
+        
+        <div class="col-sm-12 col-md-6 col-lg-4">
+          <fieldset>
+            <label>Version <span class="validacion">*</span></label>
+            <input formControlName="version" type="number" class="form-control" placeholder="version">
+            <app-validacion [validacion]="'required'" [texto]="'The version is required.'"
+              [control]="this.formulario.controls['version']" />
+          </fieldset>
+        </div>
+
+      </div>
+
+      <div class="row mb-3">
+                
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <fieldset>
+            <label>XmlBase <span class="validacion">*</span></label>           
+            <textarea formControlName="xmlBase" class="form-control" cols="30" rows="10"></textarea>
+            <app-validacion [validacion]="'required'" [texto]="'The xmlBase is required.'"
+              [control]="this.formulario.controls['xmlBase']" />
+          </fieldset>
+        </div>
+
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <fieldset>
+            <label>XmlAutocad <span class="validacion">*</span></label>           
+            <textarea formControlName="xmlAutocad" class="form-control" cols="30" rows="10"></textarea>
+            <app-validacion [validacion]="'required'" [texto]="'The xmlAutocad is required.'"
+              [control]="this.formulario.controls['xmlAutocad']" />
+          </fieldset>
+        </div>
+
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <fieldset>
+            <label>CsvQuote <span class="validacion">*</span></label>           
+            <textarea formControlName="csvQuote" class="form-control" cols="30" rows="10"></textarea>
+            <app-validacion [validacion]="'required'" [texto]="'The csvQuote is required.'"
+              [control]="this.formulario.controls['csvQuote']" />
+          </fieldset>
+        </div>
+
+        
+      </div>
+
+    </form>
+  </div>
+  <div class="modal-footer d-flex">
+    <div class="d-flex justify-content-end">
+      <button type="button" class="boton primario relleno" (click)="update()">
+        Update
+      </button>
+    </div>
+  </div>
+  
+</ng-template>
+<app-popup #popup />

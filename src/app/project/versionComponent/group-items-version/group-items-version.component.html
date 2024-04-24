@@ -1,14 +1,19 @@
 <div class="p-5">
-  <h2 class="texto-primario fw-semibold mb-3">Group Items</h2>
+  <div class="d-flex justify-content-between texto-primario mb-3 title-y">
+    <h2 class="fw-semibold">Group Items : (project: {{ name }}, version: {{version}})</h2>
+        <button type="submit" class="btn btn-outline-danger" (click)="back()">
+        Go back
+      </button>
+</div>
+
   <form [formGroup]="formulario">     
      
       <div class="row mb-3">
-          <label class="fw-semibold fs-16px mb-2">Groups</label>
           <div class="col-sm-12 col-md-3">
               <fieldset>
-                  <label>Role <span class="validacion">*</span></label>
+                  <label>Groups <span class="validacion">*</span></label>
                   <select formControlName="groupId" class="form-select">
-                      <option value="" selected>Select a role</option>
+                      <option value="" selected>Select a group</option>
                       <option *ngFor="let group of groupItems" [value]="group.id">{{ group.name }}</option>
                   </select>
                   <app-validacion
@@ -32,11 +37,13 @@
     <li *ngFor="let groupIItemVersion of groupIItemVersions">
       <app-items-version 
       #itemsVersion
+      (deleteGroupEmit)="deleteGroupEmit()"
+      (createdIItemVersionModal)="createdIItemVersionModal()"
+      (updateIItemVersionModal)="updateIItemVersionModal()"
+      (deleteIItemVersionModal)="deleteIItemVersionModal()"
       [itemsGroup] = "groupIItemVersion['itemsGroup']"
       [projectVersionId] = "projectVersionId!"
-      (createdIItemVersion)="createdIItemVersion()"
       />
-
     </li>
   </ul>
 

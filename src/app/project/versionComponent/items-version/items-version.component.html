@@ -1,18 +1,19 @@
 <div class="w-100">
-  <div class="clasificacion d-flex w-100 cursor-pointer" (click)="toogleUnfolded()">
-      <span>
-          <img *ngIf="unfolded" src="assets/images/unfolded.png" class="cursor-pointer" draggable="false" alt="unfolded">
-          <img *ngIf="!unfolded" src="assets/images/folded.png" class="cursor-pointer" draggable="false" alt="folded">
-      </span>
-      <span class="texto-azul-004884 fs-14px fw-semibold">
-          {{itemsGroup.name}} {{itemsGroup.id}} {{projectVersionId}}
-      </span>
-  </div>
+
+  <div class="clasificacion d-flex w-100 cursor-pointer" (click)="toogleUnfolded()" style="justify-content: space-between;">
+    <span style="max-width: 80%;"> <!-- Establece el ancho máximo -->
+        <img *ngIf="unfolded" src="assets/images/unfolded.png" class="cursor-pointer" draggable="false" alt="unfolded">
+        <img *ngIf="!unfolded" src="assets/images/folded.png" class="cursor-pointer" draggable="false" alt="folded">
+        <span class="texto-azul-004884 fs-14px fw-semibold">{{itemsGroup.name}}</span>
+    </span>
+    <span class="cursor-pointer" (click)="deleteGroup(itemsGroup.id)"><mat-icon class="iconDelete">delete</mat-icon></span>
+</div>
   
   <div class="w-100 overflow-auto custom-scroll" [ngClass]="{'d-none': !unfolded, 'd-block': unfolded}">
     <div class="d-flex mb-3 justify-content-end me-5"> 
       <fieldset class="d-flex align-items-end me-2">
-        <button class="boton btn btn-success  d-flex align-items-center" (click)="modalCreate()"><mat-icon>add</mat-icon> New Item</button>
+        <button class="boton btn btn-secondary  d-flex align-items-center me-2" (click)="updateItems()"><mat-icon class="iconCreate">sync</mat-icon> Update item</button>
+        <button class="boton btn btn-success  d-flex align-items-center" (click)="modalCreate()"><mat-icon class="iconCreate">add</mat-icon> New Item</button>
     </fieldset>
     </div>
     <div class="table-responsive mb-3">
@@ -39,10 +40,10 @@
                   <td>{{ item.priceUnit }}</td>
                   <td>{{ item.priceTotal }}</td>
                   <td width="10px">
-                      <span class="cursor-pointer" (click)="modalUpdate(item)" ><mat-icon>edit</mat-icon> </span>
+                      <span class="cursor-pointer" (click)="modalUpdate(item)" ><mat-icon class="iconEdit">edit</mat-icon> </span>
                   </td>
                   <td width="10px">
-                    <span class="cursor-pointer" (click)="deleteItem(item.id)"><mat-icon>delete</mat-icon> </span>
+                    <span class="cursor-pointer" (click)="deleteItem(item.id)"><mat-icon class="iconDelete">delete</mat-icon> </span>
                 </td>
               </tr>
               <tr *ngIf="itemsGroup.items?.length === 0">
@@ -60,3 +61,6 @@
 <app-update-items-version-modal #modalUpdateItemVersion 
 (updatedIItemVersion)="updatedIItemVersion()"
 />
+
+
+<app-popup #popup />

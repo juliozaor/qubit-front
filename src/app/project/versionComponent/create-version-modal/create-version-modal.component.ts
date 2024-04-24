@@ -4,6 +4,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProjectVersionService } from '../../project-version.service';
 import { markFormAsDirty } from '../../../utilidades/Utilidades';
+import { ConceptDrawModel } from '../../../models/conceptDraw.model';
+import { ConcepDrawService } from '../../../conceptDraw/concep-draw.service';
 
 @Component({
   selector: 'app-create-version-modal',
@@ -14,17 +16,20 @@ export class CreateVersionModalComponent {
   @ViewChild('modal') modal!: ElementRef;
   @ViewChild('popup') popup!: PopupComponent;
   @Output('createdVersion') createdVersion: EventEmitter<void>;
-  formulario: FormGroup;
+  form: FormGroup;
   version?: ProjectVersionService;
   projectId?:number;
+  name?:string;
+  conceptDraws: ConceptDrawModel[] = [];
   constructor(
     private serviceModal: NgbModal,
-    private service: ProjectVersionService,
+    private service: ProjectVersionService,    
+    private serviceConcept: ConcepDrawService,
   ) {
     this.createdVersion = new EventEmitter<void>();
-    this.formulario = new FormGroup({         
+    this.form = new FormGroup({         
       version: new FormControl('', [Validators.required]),
-      /* revisedDate: new FormControl('', [Validators.required]), */
+      revisedDate: new FormControl('', [Validators.required]),
       executiveSummary: new FormControl('', [Validators.required]),
       scopeWork: new FormControl('', [Validators.required]),
       tradingConditions: new FormControl('', [Validators.required]),
@@ -35,25 +40,27 @@ export class CreateVersionModalComponent {
       conceptnetDrawId: new FormControl('', [Validators.required]),
 
     });
+    this.getConceptDraws();
   }
 
-  openModal(projectId:number) {
+  openModal(projectId:number, name:string) {
     this.projectId = projectId
+    this.name = name
     this.serviceModal.open(this.modal, {
       size: 'xl',
     });
   }
 
   create() {
-    if (this.formulario.invalid) {
-      markFormAsDirty(this.formulario);
+    if (this.form.invalid) {
+      markFormAsDirty(this.form);
       return;
     }
-    const controls = this.formulario.controls;
+    const controls = this.form.controls;
     this.service
       .setProjectVersion({
         version: controls['version'].value,
-        /* revisedDate: controls['revisedDate'].value, */
+        revisedDate: controls['revisedDate'].value,
         executiveSummary: controls['executiveSummary'].value,
         scopeWork: controls['scopeWork'].value,
         tradingConditions: controls['tradingConditions'].value,
@@ -76,6 +83,19 @@ export class CreateVersionModalComponent {
           );
         },
       });
+  }
+
+  getConceptDraws() {
+    this.serviceConcept.getConceptDraws(1,100000).subscribe({
+      next: (resp) => {
+        this.conceptDraws = resp.conceptDraws;
+      },
+    });
+  }
+
+  clearForm(){
+    this.form.reset()
+    this.form.get('conceptnetDrawId')!.setValue("")
   }
 
 

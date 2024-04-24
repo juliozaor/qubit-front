@@ -1,6 +1,6 @@
 import { Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { PopupComponent } from '../../../alertas/componentes/popup/popup.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Pager } from '../../../compartido/modelos/Pager';
 import { Filters } from '../../../compartido/modelos/Filters';
 import { ItemGroupService } from '../../../itemGroup/item-group.service';
@@ -10,6 +10,7 @@ import { markFormAsDirty } from '../../../utilidades/Utilidades';
 import { Pagination } from '../../../compartido/modelos/Pagination';
 import { Observable } from 'rxjs';
 import { ItemsVersionComponent } from '../items-version/items-version.component';
+import { ProjectVersionService } from '../../project-version.service';
 
 @Component({
   selector: 'app-group-items-version',
@@ -28,17 +29,21 @@ export class GroupItemsVersionComponent {
   groupIItemVersions?: any;
   groupItems?: any[];
   formulario: FormGroup;
+  version?:string;
+  projectId?:number;
+  name?:string;
   @ViewChildren('itemsVersion') itemsVersion!: QueryList<ItemsVersionComponent>
   constructor(
     private routeActive: ActivatedRoute,
+    private serviceVersion: ProjectVersionService, 
     private service: ItemIGroupVersionItemService,
-    private serviceGroup: ItemGroupService
+    private serviceGroup: ItemGroupService, private route:Router
   ) {
     this.routeActive.params.subscribe((params) => {
       this.projectVersionId = params['projectVersionId'];
     });
     this.getGroups();
-    
+    this.getProjectVersion();
     this.formulario = new FormGroup({
       groupId: new FormControl(undefined, [Validators.required]),
     });
@@ -55,8 +60,9 @@ export class GroupItemsVersionComponent {
     this.service
     .addGroupIItem(this.projectVersionId!, controls['groupId'].value )
     .subscribe({
-      next: () => {
+      next: (resp) => {
        // this.pager.refrescar();
+       this.getGroupItems()
       },
       error: () => {
          this.popup.abrirPopupFallido("Error updating group item", "Try again later.")
@@ -82,10 +88,25 @@ export class GroupItemsVersionComponent {
     });
   }
 
-  /*   modalCreate() {
-    this.modalCreateItem.openModal(this.groupId!);
+  deleteGroupEmit(){    
+    this.getGroupItems()
   }
- */
+
+  createdIItemVersionModal(){
+    this.getGroupItems()
+    this.popup.abrirPopupExitoso('item created successfully.');
+  }
+
+  updateIItemVersionModal(){
+    
+    this.getGroupItems()
+    this.popup.abrirPopupExitoso('item updated successfully.');
+  }
+
+  deleteIItemVersionModal(){    
+    this.getGroupItems()
+    this.popup.abrirPopupExitoso('item delete successfully.');
+  }
 
   getGroups() {
     this.serviceGroup.getgroupItems(1, 100000).subscribe({
@@ -95,34 +116,22 @@ export class GroupItemsVersionComponent {
     });
   }
 
-  createdIItemVersion() {
-    // this.pager.refrescar();
-     this.popup.abrirPopupExitoso('item created successfully.');
-   }
+  getProjectVersion() {
+    this.serviceVersion.getProjectVersion(this.projectVersionId!).subscribe({
+      next: (resp) => {
+        
+        this.version = resp.version
+        this.projectId =resp.project_id
+        this.name = resp.project.name
 
-  /*   modalUpdate(name:string, item: ItemIGroupModel) {
-    this.modalUpdateItem.openModal(name, item);
-  } */
-
-  /*   createdIItem() {
-    this.pager.refrescar();
-    this.popup.abrirPopupExitoso('item created successfully.');
-  } */
-
-  /*   updatedIItem() {
-    this.pager.refrescar();
-    this.popup.abrirPopupExitoso('item updated successfully.');
-  } */
-
-  /*   deleteItem(id: number) {
-    this.service.deleteGroupItem(id).subscribe({
-      next: (resp) => {     
-        console.log(resp);
-                     
-        this.pager.refrescar();
-        this.popup.abrirPopupExitoso('item delete successfully.');
+        
       },
     });
-  } */
+  }
+
+  back(){
+    this.route.navigate([`/dashboard/project/versions/${ this.projectId }/${ this.name }`]);
+  }
+
 
 }

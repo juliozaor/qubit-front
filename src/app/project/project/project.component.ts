@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { Pagination } from '../../compartido/modelos/Pagination';
 import { PopupComponent } from '../../alertas/componentes/popup/popup.component';
 import { Router } from '@angular/router';
+import { CloneProjectComponent } from '../projectComponent/clone-project/clone-project.component';
 
 @Component({
   selector: 'app-project',
@@ -19,6 +20,7 @@ export class ProjectComponent {
 
   @ViewChild('modalCreateProject') modalCreateProject!: CreateProjectModalComponent;
   @ViewChild('modalUpdateProject') modalUpdateProject!: UpdateProjectModalComponent;
+  @ViewChild('modalCloneProject') modalCloneProject!: CloneProjectComponent;
   @ViewChild('popup') popup!: PopupComponent;
   pager: Pager<Filters>;
   projects: ProjectModel[] = [];
@@ -74,10 +76,19 @@ export class ProjectComponent {
     this.popup.abrirPopupExitoso('Project updated successfully.');
   }
 
-  openVersions(projectId: number) {
+  openVersions(projectId: number, name:string) {
     if (projectId) {
-      this.route.navigate(['/dashboard/project/versions', projectId]);
+      this.route.navigate(['/dashboard/project/versions', projectId, name]);
     }
+  }
+
+  modalClone(projectId:number, name:string) {
+    this.modalCloneProject.openModal(projectId, name);
+  }
+
+  clonedProject(){
+    this.pager.refrescar();
+    this.popup.abrirPopupExitoso('Project cloned successfully.');
   }
 
 }

@@ -17,6 +17,8 @@ import { ProjectStatusModel } from '../../../models/masters/projectStatus';
 import { ClientService } from '../../../client/client.service';
 import { TypeProjectModel } from '../../../models/masters/typeProject';
 import { TypeApplicationModel } from '../../../models/masters/typeApplication';
+import { ConcepDrawService } from '../../../conceptDraw/concep-draw.service';
+import { ConceptDrawModel } from '../../../models/conceptDraw.model';
 
 @Component({
   selector: 'app-create-project-modal',
@@ -27,20 +29,22 @@ export class CreateProjectModalComponent {
   @ViewChild('modal') modal!: ElementRef;
   @ViewChild('popup') popup!: PopupComponent;
   @Output('createdProject') createdProject: EventEmitter<void>;
-  formulario: FormGroup;
+  form: FormGroup;
   project?: ProjectModel;
   projectStatus: ProjectStatusModel[] = [];
   clients: ClientModel[] = [];
   typeProjects: TypeProjectModel[] = [];
   typeApplications: TypeApplicationModel[] = [];
+  conceptDraws: ConceptDrawModel[] = [];
   constructor(
     private serviceModal: NgbModal,
     private serviceProject: ProjectService,
     private serviceMaster: MastersService,
-    private serviceClient: ClientService
+    private serviceClient: ClientService,
+    private serviceConcept: ConcepDrawService,
   ) {
     this.createdProject = new EventEmitter<void>();
-    this.formulario = new FormGroup({
+    this.form = new FormGroup({
       code: new FormControl('', [Validators.required]),
       name: new FormControl('', [Validators.required]),
       subtitle: new FormControl('', [Validators.required]),
@@ -58,6 +62,7 @@ export class CreateProjectModalComponent {
     this.getClients();
     this.getTypeApplications();
     this.getTypeProjects();
+    this.getConceptDraws();
   }
 
   openModal() {
@@ -67,11 +72,11 @@ export class CreateProjectModalComponent {
   }
 
   create() {
-    if (this.formulario.invalid) {
-      markFormAsDirty(this.formulario);
+    if (this.form.invalid) {
+      markFormAsDirty(this.form);
       return;
     }
-    const controls = this.formulario.controls;
+    const controls = this.form.controls;
     this.serviceProject
       .setProject({
         code: controls['code'].value,
@@ -87,6 +92,7 @@ export class CreateProjectModalComponent {
       .subscribe({
         next: () => {
           this.createdProject.emit();
+          this.clearForm();
           this.closeModal();
         },
         error: () => {
@@ -126,7 +132,23 @@ export class CreateProjectModalComponent {
       },
     });
   }
+
+  getConceptDraws() {
+    this.serviceConcept.getConceptDraws(1,100000).subscribe({
+      next: (resp) => {
+        this.conceptDraws = resp.conceptDraws;
+      },
+    });
+  }
   
+  clearForm(){
+    this.form.reset()
+    this.form.get('typeApplicationId')!.setValue("")
+    this.form.get('typeProjectId')!.setValue("")
+    this.form.get('clientId')!.setValue("")
+    this.form.get('conceptnetDrawId')!.setValue("")
+    this.form.get('projectStatusId')!.setValue("")
+  }
 
   closeModal() {
     this.serviceModal.dismissAll();

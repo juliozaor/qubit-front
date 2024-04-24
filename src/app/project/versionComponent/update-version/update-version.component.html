@@ -1,0 +1,132 @@
+<div class="p-5">
+    <div class="d-flex justify-content-between texto-primario mb-3 title-y">
+      <h2 class="fw-semibold">Update Project Version : {{ name }}</h2>
+          <button type="submit" class="btn btn-outline-danger" (click)="back()">
+          Go back
+        </button>
+  </div>
+
+  <div class="d-flex mb-3 flex-gap-20">
+
+    <form [formGroup]="form">
+        <div class="row mb-3">
+          <div class="col-sm-12 col-md-6 col-lg-3">
+              <fieldset>
+                  <label>Version <span class="validacion">*</span></label>
+                  <input formControlName="version" type="text" class="form-control" placeholder="Version">
+                  <app-validacion [validacion]="'required'" [texto]="'The version is required.'"
+                    [control]="this.form.controls['version']"></app-validacion>
+               </fieldset>
+          </div>
+          
+          <div class="col-sm-12 col-md-6 col-lg-3">
+              <fieldset>
+                  <label>Revised Date <span class="validacion">*</span></label>
+                  <input formControlName="revisedDate" type="datetime-local" class="form-control" placeholder="Revised Date">
+                  <app-validacion [validacion]="'required'" [texto]="'The revised date is required.'"
+                    [control]="this.form.controls['revisedDate']"></app-validacion>
+               </fieldset>
+          </div>
+          
+          <div class="col-sm-12 col-md-6 col-lg-3">
+              <fieldset>
+                  <label>Executive Summary <span class="validacion">*</span></label>
+                  <textarea formControlName="executiveSummary" class="form-control" placeholder="Executive Summary"></textarea>
+                  <app-validacion [validacion]="'required'" [texto]="'The executive summary is required.'"
+                    [control]="this.form.controls['executiveSummary']"></app-validacion>
+               </fieldset>
+          </div>
+          
+          <div class="col-sm-12 col-md-6 col-lg-3">
+              <fieldset>
+                  <label>Scope Work <span class="validacion">*</span></label>
+                  <textarea formControlName="scopeWork" class="form-control" placeholder="Scope Work"></textarea>
+                  <app-validacion [validacion]="'required'" [texto]="'The scope work is required.'"
+                    [control]="this.form.controls['scopeWork']"></app-validacion>
+               </fieldset>
+          </div>
+          </div>
+          
+          <div class="row mb-3">
+          <div class="col-sm-12 col-md-6 col-lg-3">
+              <fieldset>
+                  <label>Trading Conditions <span class="validacion">*</span></label>
+                  <textarea formControlName="tradingConditions" class="form-control" placeholder="Trading Conditions"></textarea>
+                  <app-validacion [validacion]="'required'" [texto]="'The trading conditions are required.'"
+                    [control]="this.form.controls['tradingConditions']"></app-validacion>
+               </fieldset>
+          </div>
+          
+          <div class="col-sm-12 col-md-6 col-lg-3">
+              <fieldset>
+                  <label>Comment Clarifications <span class="validacion">*</span></label>
+                  <textarea formControlName="commentClarifications" class="form-control" placeholder="Comment Clarifications"></textarea>
+                  <app-validacion [validacion]="'required'" [texto]="'The comment clarifications are required.'"
+                    [control]="this.form.controls['commentClarifications']"></app-validacion>
+               </fieldset>
+          </div>
+          
+          <div class="col-sm-12 col-md-6 col-lg-3">
+              <fieldset>
+                  <label>Payment Terms <span class="validacion">*</span></label>
+                  <textarea formControlName="paymentTerms" class="form-control" placeholder="Payment Terms"></textarea>
+                  <app-validacion [validacion]="'required'" [texto]="'The payment terms are required.'"
+                    [control]="this.form.controls['paymentTerms']"></app-validacion>
+               </fieldset>
+          </div>
+          
+          <div class="col-sm-12 col-md-6 col-lg-3">
+              <fieldset>
+                  <label>Quote Path <span class="validacion">*</span></label>
+                  <input formControlName="quotePath" type="text" class="form-control" placeholder="Quote Path">
+                  <app-validacion [validacion]="'required'" [texto]="'The quote path is required.'"
+                    [control]="this.form.controls['quotePath']"></app-validacion>
+               </fieldset>
+          </div>
+          </div>
+          
+          <div class="row mb-3">
+          <div class="col-sm-12 col-md-6 col-lg-3">
+              <fieldset>
+                  <label>Quote Name <span class="validacion">*</span></label>
+                  <input formControlName="quoteName" type="text" class="form-control" placeholder="Quote Name">
+                  <app-validacion [validacion]="'required'" [texto]="'The quote name is required.'"
+                    [control]="this.form.controls['quoteName']"></app-validacion>
+               </fieldset>
+          </div>
+          
+          <div class="col-sm-12 col-md-6 col-lg-3">
+            <fieldset class="me-2">
+              <label>Concept Draw <span class="validacion">*</span></label>                 
+                  <ng-select formControlName="conceptnetDrawId" class="form-select">
+                    <ng-option *ngFor="let conceptDraw of conceptDraws" [value]="conceptDraw.id">{{ conceptDraw.name }}</ng-option>
+                   </ng-select>
+                  <app-validacion
+                  [validacion]="'required'"
+                  [texto]="'The conceptDraw is required.'"
+                  [control]="this.form.controls['conceptnetDrawId']"
+                  />    
+          </fieldset>
+          </div>
+          </div>
+  
+      </form>
+  </div>
+  <div class="d-flex mb-3 flex-gap-20">
+    <div class="d-flex justify-content-end">
+        <button type="button" class="boton primario relleno" (click)="update()">
+          Update
+        </button>
+      </div>
+  </div>
+
+
+  <div class="d-flex justify-content-between texto-primario mb-3 title-y">
+    <h2 class="fw-semibold">Financial indicators</h2>        
+</div>
+<fieldset class="d-flex align-items-end justify-content-end">
+    <button class="boton btn btn-secondary  d-flex align-items-center me-2" (click)="UpdateIndicators()"><mat-icon class="iconCreate">sync</mat-icon> Update Indicators</button>
+</fieldset>
+
+  <app-popup #popup />
+  

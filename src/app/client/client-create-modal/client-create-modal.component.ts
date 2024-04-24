@@ -16,14 +16,14 @@ export class ClientCreateModalComponent {
   @ViewChild('modal') modal!: ElementRef;
   @ViewChild('popup') popup!: PopupComponent
   @Output('createdClient') createdClient: EventEmitter<void>;
-  formulario: FormGroup;
+  form: FormGroup;
   client?: ClientModel;
   constructor(
     private serviceModal: NgbModal,
     private service: ClientService
   ) {
     this.createdClient = new EventEmitter<void>();
-    this.formulario = new FormGroup({
+    this.form = new FormGroup({
       names: new FormControl('', [Validators.required]),
       surnames: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required]),
@@ -39,11 +39,11 @@ export class ClientCreateModalComponent {
   }
 
   create() {
-    if (this.formulario.invalid) {
-      markFormAsDirty(this.formulario);
+    if (this.form.invalid) {
+      markFormAsDirty(this.form);
       return;
     }
-    const controls = this.formulario.controls;
+    const controls = this.form.controls;
     this.service
       .setClient({
         names: controls['names'].value,
@@ -53,7 +53,8 @@ export class ClientCreateModalComponent {
       .subscribe({
         next: () => {
            this.createdClient.emit();
-           this.closeModal()
+           this.clearForm();
+           this.closeModal();
         },
         error: () => {
            this.popup.abrirPopupFallido("Error updating client", "Try again later.")
@@ -61,6 +62,9 @@ export class ClientCreateModalComponent {
       });
   }
 
+  clearForm(){
+    this.form.reset()
+  }
 
   closeModal() {
     this.serviceModal.dismissAll();

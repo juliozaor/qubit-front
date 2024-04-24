@@ -17,7 +17,7 @@
   </div>
   <div class="d-flex mb-3 justify-content-end me-5"> 
     <fieldset class="d-flex align-items-end me-2">
-        <button class="boton btn btn-success  d-flex align-items-center" (click)="modalCreate()"><mat-icon>add</mat-icon> New Project</button>
+        <button class="boton btn btn-success  d-flex align-items-center" (click)="modalCreate()"><mat-icon class="iconCreate">add</mat-icon> New Project</button>
     </fieldset>
   </div>
   <div class="table-responsive mb-3">
@@ -31,7 +31,7 @@
                   <th>ClientId</th>
                   <th>ProjectStatusId</th>
                   <th>Basepath</th>
-                  <th colspan="2" class="text-center" width="50px">Actions</th>
+                  <th colspan="3" class="text-center" width="50px">Actions</th>
               </tr>
           </thead>
           <tbody>
@@ -44,14 +44,14 @@
                   <td>{{ project.projectStatus }}</td>
                   <td>{{ project.basepath }}</td>
                   <td width="10px">
-                      <span class="cursor-pointer" (click)="modalUpdate(project)" ><mat-icon>edit</mat-icon> </span>
+                      <span class="cursor-pointer" (click)="modalUpdate(project)" ><mat-icon class="iconEdit">edit</mat-icon> </span>
                   </td>
                   <td width="10px">
-                    <span class="cursor-pointer" (click)="openVersions(project.id !)" >Versions</span>
+                    <span class="cursor-pointer" (click)="openVersions(project.id!, project.name!)" >Versions</span>
                 </td>
-                <!--   <td width="10px">
-                    <span class="cursor-pointer" (click)="deleteProject(project.id)"><mat-icon>delete</mat-icon> </span>
-                </td> -->
+                  <td width="10px">
+                    <span class="cursor-pointer" (click)="modalClone(project.id!, project.name!)">Clone</span>
+                </td>
               </tr>
               <tr *ngIf="projects.length === 0">
                   <td colspan="6">No projects were found with the established filters.</td>
@@ -80,4 +80,7 @@
 <app-update-project-modal #modalUpdateProject 
 (updatedProject)="updatedProject()"
 />
+<app-clone-project #modalCloneProject
+(clonedProject)="clonedProject()"/>
+
 <app-popup #popup />

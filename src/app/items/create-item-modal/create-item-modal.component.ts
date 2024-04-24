@@ -18,7 +18,7 @@ export class CreateItemModalComponent {
   @ViewChild('modal') modal!: ElementRef;
   @ViewChild('popup') popup!: PopupComponent
   @Output('createdItem') createdItem: EventEmitter<void>;
-  formulario: FormGroup;
+  form: FormGroup;
   item?: ItemModel;
   typesUnit: TypeUnitModel[] = [];
   typesItem: TypeItemModel[] = [];
@@ -28,7 +28,7 @@ export class CreateItemModalComponent {
     private serviceMaster: MastersService
   ) {
     this.createdItem = new EventEmitter<void>();
-    this.formulario = new FormGroup({
+    this.form = new FormGroup({
       code: new FormControl('', [Validators.required]),
       name: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
@@ -51,11 +51,11 @@ export class CreateItemModalComponent {
   }
 
   create() {
-    if (this.formulario.invalid) {
-      markFormAsDirty(this.formulario);
+    if (this.form.invalid) {
+      markFormAsDirty(this.form);
       return;
     }
-    const controls = this.formulario.controls;
+    const controls = this.form.controls;
     this.serviceItem
       .setItem({
         code: controls['code'].value,
@@ -69,6 +69,7 @@ export class CreateItemModalComponent {
       .subscribe({
         next: () => {
            this.createdItem.emit();
+           this.clearForm();
            this.closeModal()
         },
         error: () => {
@@ -92,6 +93,11 @@ export class CreateItemModalComponent {
     });
   }
   
+  clearForm(){
+    this.form.reset()
+    this.form.get('typeItemId')!.setValue("")
+    this.form.get('typeUnitId')!.setValue("")
+  }
 
   closeModal() {
     this.serviceModal.dismissAll();

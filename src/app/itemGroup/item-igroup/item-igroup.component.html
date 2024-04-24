@@ -1,23 +1,17 @@
 <div class="p-5">
-  <h2 class="texto-primario fw-semibold mb-3">Group {{nameGroup}}</h2>
+  
+  <div class="d-flex justify-content-between texto-primario mb-3 title-y">
+    <h2 class="fw-semibold">Group : {{nameGroup}}</h2>
+        <button type="submit" class="btn btn-outline-danger" (click)="back()">
+        Go back
+      </button>
+</div>
 
- <!--  <div class="d-flex mb-3 flex-gap-20">
-      <fieldset class="me-2">
-          <label class="fs-14px fw-semibold">Keyword</label>
-          <app-input-search [(ngModel)]="term" />
-      </fieldset>
-      <fieldset class="d-flex align-items-end">
-          <button class="boton primario relleno me-2" (click)="updateFilters()">
-            Search
-          </button>
-          <button class="boton primario delineado" (click)="clearFilters()">
-            Clean filters
-          </button>
-      </fieldset>
-  </div> -->
+
   <div class="d-flex mb-3 justify-content-end me-5"> 
     <fieldset class="d-flex align-items-end me-2">
-        <button class="boton btn btn-success  d-flex align-items-center" (click)="modalCreate()"><mat-icon>add</mat-icon> Add item</button>
+        <button class="boton btn btn-secondary  d-flex align-items-center me-2" (click)="updateItems()"><mat-icon class="iconCreate">sync</mat-icon> Update item</button>
+        <button class="boton btn btn-success  d-flex align-items-center" (click)="modalCreate()"><mat-icon class="iconCreate">add</mat-icon> Add item</button>
     </fieldset>
   </div>
   <div class="table-responsive mb-3">
@@ -42,10 +36,10 @@
                   <td>{{ item.tax }}</td>
                   <td>{{ item.priceTotal }}</td>
                   <td width="10px">
-                      <span class="cursor-pointer" (click)="modalUpdate(item.itemName, item)" ><mat-icon>edit</mat-icon> </span>
+                      <span class="cursor-pointer" (click)="modalUpdate(item.itemName, item)" ><mat-icon class="iconEdit">edit</mat-icon> </span>
                   </td>
                   <td width="10px">
-                    <span class="cursor-pointer" (click)="deleteItem(item.id)"><mat-icon>delete</mat-icon> </span>
+                    <span class="cursor-pointer" (click)="deleteItem(item.id)"><mat-icon class="iconDelete">delete</mat-icon> </span>
                 </td>
               </tr>
               <tr *ngIf="items?.length === 0">
