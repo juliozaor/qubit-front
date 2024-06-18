@@ -332,3 +332,7 @@ color: green;
   padding: 20px;
   background: #eb7f7f66;
 }
+
+td{
+  vertical-align: middle;
+}

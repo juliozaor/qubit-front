@@ -67,7 +67,13 @@ export class ProjectVersionComponent {
 
   openGroups(projectVersionId: number) {
     if (projectVersionId) {
-      this.route.navigate(['/dashboard/project/groupItems', projectVersionId]);
+      this.route.navigate(['/dashboard/project/groupItems', projectVersionId, 1]);
+    }
+  }
+
+  calcEstimate(projectVersionId: number) {
+    if (projectVersionId) {
+      this.route.navigate(['/dashboard/project/calEstimate', projectVersionId]);
     }
   }
 

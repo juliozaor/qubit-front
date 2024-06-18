@@ -30,6 +30,7 @@
                   <th>code</th>
                   <th>basePrice</th>
                   <th>baseTax</th>
+                  <th>cost</th>
                   <th colspan="2" class="text-center" width="50px">Actions</th>
               </tr>
           </thead>
@@ -41,12 +42,11 @@
                   <td>{{ item.code }}</td>
                   <td>{{ item.basePrice }}</td>
                   <td>{{ item.baseTax }}</td>
+                  <td>{{ item.cost }}</td>
                   <td width="10px">
                       <span class="cursor-pointer" (click)="modalUpdate(item)" ><mat-icon class="iconEdit">edit</mat-icon> </span>
                   </td>
-                <!--   <td width="10px">
-                    <span class="cursor-pointer" (click)="deleteItem(item.id)"><mat-icon class="iconDelete">delete</mat-icon> </span>
-                </td> -->
+               
               </tr>
               <tr *ngIf="items.length === 0">
                   <td colspan="6">No items were found with the established filters.</td>

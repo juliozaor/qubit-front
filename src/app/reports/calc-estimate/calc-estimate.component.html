@@ -1,0 +1,58 @@
+<div class="p-5">
+    <div class="d-flex justify-content-between texto-primario mb-3 title-y">
+      <h2 class="fw-semibold">Group Items </h2>
+        
+  </div>  
+
+    <hr>
+  
+
+    <div class="w-100" *ngFor="let groupItems of groupsItems">
+
+        <div class="clasificacion d-flex w-100 cursor-pointer"  style="justify-content: space-between;">
+          <span style="max-width: 80%;"> <!-- Establece el ancho máximo -->
+              
+              <span class="texto-azul-004884 fs-14px fw-semibold">{{groupItems.groupName}}</span>
+          </span>
+         
+      </div>
+          <div class="table-responsive mb-3" >
+            <table class="table list-items">
+                <thead>
+                    <tr>
+                      <th>ID</th>
+                        <th>Name</th>
+                        <th>Price Unit</th>
+                        <th>Quantity</th>
+                        <th>Cost</th>
+                        <th>Total Cost</th>
+                        <th>Margin</th>
+                        <th>Total Sell</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of groupItems.items">
+                        <td>{{ item.itemId }}</td>
+                        <td>{{ item.itemName }}</td>
+                        <td>{{ item.itemPrice }}</td>
+                        <td>{{ item.itemQuantity }}</td>
+                        <td>{{ item.itemCost }}</td>
+                        <td>{{ item.itemTotalCost }}</td>
+                        <td>{{ item.itemMargin }}%</td>
+                        <td>{{ item.itemTotalSell }}</td>
+                        
+                    </tr>
+                    <tr *ngIf="groupItems.items?.length === 0">
+                        <td colspan="6">No items were found with the established filters.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+      </div>
+
+
+
+
+    
+  </div>
+  <app-popup #popup />

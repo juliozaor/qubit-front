@@ -32,6 +32,7 @@ export class GroupItemsVersionComponent {
   version?:string;
   projectId?:number;
   name?:string;
+  location?:number;
   @ViewChildren('itemsVersion') itemsVersion!: QueryList<ItemsVersionComponent>
   constructor(
     private routeActive: ActivatedRoute,
@@ -41,6 +42,7 @@ export class GroupItemsVersionComponent {
   ) {
     this.routeActive.params.subscribe((params) => {
       this.projectVersionId = params['projectVersionId'];
+      this.location = params['location'];
     });
     this.getGroups();
     this.getProjectVersion();
@@ -130,7 +132,11 @@ export class GroupItemsVersionComponent {
   }
 
   back(){
-    this.route.navigate([`/dashboard/project/versions/${ this.projectId }/${ this.name }`]);
+    if(this.location == 2){
+      this.route.navigate(['/dashboard/project/calEstimate', this.projectVersionId]);
+    }else{
+      this.route.navigate([`/dashboard/project/versions/${ this.projectId }/${ this.name }`]);
+    }
   }
 
 

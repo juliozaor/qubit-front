@@ -19,6 +19,7 @@ import { CreateItemsVersionModalComponent } from './versionComponent/create-item
 import { UpdateItemsVersionModalComponent } from './versionComponent/update-items-version-modal/update-items-version-modal.component';
 import { CloneProjectComponent } from './projectComponent/clone-project/clone-project.component';
 import { UpdateVersionComponent } from './versionComponent/update-version/update-version.component';
+import { CalcEstimateComponent } from './versionComponent/calc-estimate/calc-estimate.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { UpdateVersionComponent } from './versionComponent/update-version/update
     CreateItemsVersionModalComponent,
     UpdateItemsVersionModalComponent,
     CloneProjectComponent,
-    UpdateVersionComponent
+    UpdateVersionComponent,
+    CalcEstimateComponent
   ],
   imports: [
     CommonModule,

@@ -49,6 +49,12 @@ const routes: Routes = [
           import('./conceptDraw/concep-draw.module').then(
             (m) => m.ConcepDrawModule
             ),
+      },{
+        path: 'reports',
+        loadChildren: () =>
+          import('./reports/reports.module').then(
+            (m) => m.ReportsModule
+            ),
       },
       { path: 'home', component: HomeComponent },
       { path: 'editor', component: EditorComponent },

@@ -46,7 +46,7 @@
         </div>
       </div>
       <div class="row mb-3">
-        <div class="col-sm-12 col-md-6">
+        <div class="col-sm-12 col-md-6 col-lg-3">
           <fieldset>
             <label>Base Price <span class="validacion">*</span></label>
             <input formControlName="basePrice" type="number" class="form-control" placeholder="basePrice">
@@ -56,7 +56,7 @@
           </fieldset>
           
         </div>
-        <div class="col-sm-12 col-md-6">
+        <div class="col-sm-12 col-md-6 col-lg-3">
           <fieldset>
             <label>Base Tax <span class="validacion">*</span></label>
             <input formControlName="baseTax" type="text" class="form-control" placeholder="baseTax">
@@ -64,8 +64,14 @@
             [control]="this.form.controls['baseTax']" />
           </fieldset>
         </div>
-      </div>
-      <div class="row mb-5">
+        <div class="col-sm-12 col-md-6 col-lg-3">
+          <fieldset>
+            <label>Cost <span class="validacion">*</span></label>
+            <input formControlName="cost" type="text" class="form-control" placeholder="cost">
+            <app-validacion [validacion]="'required'" [texto]="'cost is required.'"
+            [control]="this.form.controls['cost']" />
+          </fieldset>
+        </div>
         <div class="col-sm-12 col-md-3">
           <fieldset class="me-2">
             <label>Type Unit <span class="validacion">*</span></label>                 

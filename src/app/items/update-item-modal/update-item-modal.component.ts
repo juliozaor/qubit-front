@@ -36,6 +36,7 @@ export class UpdateItemModalComponent {
       basePrice: new FormControl(undefined, [Validators.required]),
       baseTax: new FormControl(undefined, [Validators.required]),
       typeUnitId: new FormControl(undefined, [Validators.required]),
+      cost: new FormControl(undefined, [Validators.required]),
     });
   }
 
@@ -61,6 +62,7 @@ export class UpdateItemModalComponent {
     controls['basePrice'].setValue(item.basePrice)
     controls['baseTax'].setValue(item.baseTax)
     controls['typeUnitId'].setValue(item.typeUnitId)
+    controls['cost'].setValue(item.cost)
   }
 
   update() {
@@ -79,6 +81,7 @@ export class UpdateItemModalComponent {
         basePrice: controls['basePrice'].value,
         baseTax: controls['baseTax'].value,
         typeUnitId: controls['typeUnitId'].value,
+        cost: controls['cost'].value,
       })
       .subscribe({
         next: () => {

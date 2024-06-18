@@ -9,4 +9,6 @@ export class ItemModel {
   typeUnitId?: number;
   statusId?: number;
   userId?: number;
+  quantity?: number;
+  cost?: number;
 } 

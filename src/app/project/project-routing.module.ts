@@ -6,6 +6,7 @@ import { ProjectVersionComponent } from './project-version/project-version.compo
 import { GroupItemsVersionComponent } from './versionComponent/group-items-version/group-items-version.component';
 import { ItemsVersionComponent } from './versionComponent/items-version/items-version.component';
 import { UpdateVersionComponent } from './versionComponent/update-version/update-version.component';
+import { CalcEstimateComponent } from './versionComponent/calc-estimate/calc-estimate.component';
 
 const routes: Routes = [
   {
@@ -15,7 +16,7 @@ const routes: Routes = [
     path: 'versions/:projectId/:name',
     component: ProjectVersionComponent
   },{
-    path: 'groupItems/:projectVersionId',
+    path: 'groupItems/:projectVersionId/:location',
     component: GroupItemsVersionComponent
   },{
     path: 'itemsVersion/:groupId',
@@ -23,6 +24,9 @@ const routes: Routes = [
   },{
     path: 'updateVersion/:versionId/:name/:projectId',
     component: UpdateVersionComponent
+  },{
+    path: 'calEstimate/:projectVersionId',
+    component: CalcEstimateComponent
   }
 ];
 

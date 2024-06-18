@@ -1,0 +1,115 @@
+<div class="p-5">
+    <div class="d-flex justify-content-between texto-primario mb-3 title-y">
+      <h2 class="fw-semibold">Group Items : (project: {{ name }}, version: {{version}})</h2>
+          <button type="submit" class="btn btn-outline-danger" (click)="back()">
+          Go back
+        </button>
+  </div>  
+   
+    <hr>
+    <div class="d-flex justify-content-left">
+        <button type="button" class="boton primario relleno" (click)="openGroups()">
+          Add item group
+        </button>
+    </div>
+    <hr>
+  <div class="w-100">
+    <ul class="groupsItem">
+      <li *ngFor="let groupIItemVersion of groupIItemVersions">
+        <div class="w-100">
+
+            <div class="clasificacion d-flex w-100 mt-2"  style="justify-content: space-between;">
+                <span style="max-width: 80%;"> 
+                    <span class="texto-azul-004884 fs-14px fw-semibold">{{groupIItemVersion.itemsGroup.name}}</span>
+                </span>
+            </div>
+
+        <div class="w-100 overflow-auto custom-scroll" >
+            <div class="d-flex mb-3 justify-content-end me-5"> 
+              <fieldset class="d-flex align-items-end me-2">               
+                <button class="boton btn btn-success  d-flex align-items-center" (click)="modalCreate(groupIItemVersion.itemsGroup.id)"><mat-icon class="iconCreate">add</mat-icon> New Item</button>
+            </fieldset>
+            </div>
+            <div class="table-responsive mb-3">
+              <table class="table list-items">
+                  <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Code</th>
+                          <th>Name</th>
+                          <th>Description</th>
+                          <th>Number Unit</th>
+                          <th>Price Unit</th>
+                          <th>Cost</th>
+                          <th>Price Total</th>
+                          <th>Cost Total</th>
+                          <th>Margin</th>
+                          <th colspan="2" class="text-center">Actions</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let item of groupIItemVersion.itemsGroup.items">
+                          <td>{{ item.id }}</td>
+                          <td>{{ item.code }}</td>
+                          <td>{{ item.name }}</td>
+                          <td>{{ item.description }}</td>
+                          <td>{{ item.numberUnit }}</td>
+                          <td>{{ item.priceUnit }}</td>
+                          <td>{{ item.cost }}</td>
+                          <td>{{ item.priceTotal }}</td>
+                          <td>{{ item.costTotal }}</td>
+                          <td>{{ item.margin }}</td>
+                          <td width="10px">
+                              <span class="cursor-pointer" (click)="modalUpdate(item, groupIItemVersion.id)" ><mat-icon class="iconEdit">edit</mat-icon> </span>
+                          </td>
+                          <td width="10px">
+                            <span class="cursor-pointer" (click)="deleteItem(item.id)"><mat-icon class="iconDelete">delete</mat-icon> </span>
+                        </td>
+                      </tr>
+                      <tr *ngIf="groupIItemVersion.itemsGroup.items?.length === 0">
+                          <td colspan="6">No items were found with the established filters.</td>
+                      </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                        <td colspan="7">Total</td>
+                        <td>$ {{ groupIItemVersion.priceTotalSum }}</td>
+                        <td>$ {{ groupIItemVersion.costTotalSum }}</td>
+                        <td>{{ groupIItemVersion.marginSum }} %</td>
+                        <td colspan="2"></td> <!-- Para dejar espacio para las acciones -->
+                    </tr>
+                </tfoot>
+                
+              </table>
+          </div>
+          </div>
+        
+        </div>
+      </li>
+    </ul>
+
+    <div class="row mb-3 mt-3 prices">
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <span>Price Total Project: </span><span class="price">$ {{ priceTotalProject }}</span>            
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <span>Cost Total Project: </span><span class="price">$ {{ costTotalProject }}</span>            
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <span>Margin Project: </span><span class="price">{{ marginProject }} %</span>            
+        </div>
+       
+      </div>
+  
+    
+  </div>
+  <app-create-items-version-modal #modalCreateItemVersion 
+(createdIItemVersion)="createdIItemVersion()"
+/>
+<app-update-items-version-modal #modalUpdateItemVersion 
+(updatedIItemVersion)="updatedIItemVersion()"
+/>
+
+  <app-popup #popup />
+  
+  

@@ -40,7 +40,7 @@
                   <th>Quote Path</th>
                   <th>Quote Name</th>
                   <th>Conceptnet Draw</th>
-                  <th colspan="3" class="text-center">Actions</th>
+                  <th colspan="4" class="text-center">Actions</th>
               </tr>
           </thead>
           <tbody>
@@ -64,6 +64,9 @@
                 </td>
                   <td width="10px">
                     <span class="cursor-pointer" (click)="cloneVersion(version.id!)">clone</span>
+                </td>
+                <td width="10px">
+                  <span class="cursor-pointer" (click)="calcEstimate(version.id!)">Calc Estimate</span>
                 </td>
               </tr>
               <tr *ngIf="versionProjects?.length === 0">

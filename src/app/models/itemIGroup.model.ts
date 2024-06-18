@@ -8,4 +8,8 @@ export class ItemIGroupModel {
   tax?: number;
   statusId?: number;
   userId?: number; 
+  cost?: number;
+  costTotal?: number;
+  margin?: number;
+  actualQuantity?: number;
 } 

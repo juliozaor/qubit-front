@@ -24,6 +24,9 @@
                   <th>Price Unit</th>
                   <th>Tax</th>
                   <th>Price Total</th>
+                  <th>Cost</th>
+                  <th>Cost Total</th>
+                  <th>Margin</th>
                   <th colspan="2" class="text-center" width="50px">Actions</th>
               </tr>
           </thead>
@@ -35,6 +38,9 @@
                   <td>{{ item.priceUnit }}</td>
                   <td>{{ item.tax }}</td>
                   <td>{{ item.priceTotal }}</td>
+                  <td>{{ item.cost }}</td>
+                  <td>{{ item.costTotal }}</td>
+                  <td>{{ item.margin }}</td>
                   <td width="10px">
                       <span class="cursor-pointer" (click)="modalUpdate(item.itemName, item)" ><mat-icon class="iconEdit">edit</mat-icon> </span>
                   </td>
