@@ -25,13 +25,13 @@ const routes: Routes = [
           import('./items/items.module').then(
             (m) => m.ItemsModule
             ),
-      },{
+      }/* ,{
         path: 'items-group',
         loadChildren: () =>
           import('./itemGroup/item-group.module').then(
             (m) => m.ItemGroupModule
             ),
-      },{
+      } */,{
         path: 'project',
         loadChildren: () =>
           import('./project/project.module').then(
@@ -54,6 +54,12 @@ const routes: Routes = [
         loadChildren: () =>
           import('./reports/reports.module').then(
             (m) => m.ReportsModule
+            ),
+      },{
+        path: 'categories',
+        loadChildren: () =>
+          import('./category/category.module').then(
+            (m) => m.CategoryModule
             ),
       },
       { path: 'home', component: HomeComponent },

@@ -15,19 +15,22 @@
           </button>
       </fieldset>
   </div>
-  <div class="d-flex mb-3 justify-content-end me-5"> 
+<!--   <div class="d-flex mb-3 justify-content-end me-5"> 
     <fieldset class="d-flex align-items-end me-2">
         <button class="boton btn btn-success  d-flex align-items-center" (click)="modalCreate()"><mat-icon class="iconCreate">add</mat-icon> New Item</button>
     </fieldset>
-  </div>
+  </div> -->
   <div class="table-responsive mb-3">
       <table class="table list-items">
           <thead>
               <tr>
                 <th>ID</th>
                 <th>Name</th>
-                  <th>description</th>
-                  <th>code</th>
+                  <th>Description</th>
+                  <th>Code</th>
+                  <th>Type Item</th>
+                  <th>Type Unit</th>
+                  <th>Category</th>
                   <th>basePrice</th>
                   <th>baseTax</th>
                   <th>cost</th>
@@ -35,19 +38,104 @@
               </tr>
           </thead>
           <tbody>
-              <tr *ngFor="let item of items">
-                  <td>{{ item.id }}</td>
-                  <td>{{ item.name }}</td>
-                  <td>{{ item.description }}</td>
-                  <td>{{ item.code }}</td>
-                  <td>{{ item.basePrice }}</td>
-                  <td>{{ item.baseTax }}</td>
-                  <td>{{ item.cost }}</td>
-                  <td width="10px">
-                      <span class="cursor-pointer" (click)="modalUpdate(item)" ><mat-icon class="iconEdit">edit</mat-icon> </span>
-                  </td>
-               
-              </tr>
+            <tr *ngFor="let item of items; let i = index">
+                <td>{{ item.id }}</td>
+                <td>
+                    <span *ngIf="!item.editing">{{ item.name }}</span>
+                    <input *ngIf="item.editing" type="text" [(ngModel)]="item.name" class="form-control" />
+                </td>
+                <td>
+                    <span *ngIf="!item.editing">{{ item.description }}</span>
+                    <input *ngIf="item.editing" type="text" [(ngModel)]="item.description" class="form-control" />
+                </td>
+                <td>
+                    <span *ngIf="!item.editing">{{ item.code }}</span>
+                    <input *ngIf="item.editing" type="text" [(ngModel)]="item.code" class="form-control" />
+                </td>                
+                <td>
+                    <ng-select *ngIf="!item.editing" [disabled]="true" [(ngModel)]="item.typeItemId" class="form-select">
+                        <ng-option *ngFor="let typeItemId of typesItem" [value]="typeItemId.id">{{ typeItemId.name }}</ng-option>
+                    </ng-select>
+                    <span *ngIf="item.editing">
+                        <ng-select [disabled]="false" [(ngModel)]="item.typeItemId" class="form-select">
+                            <ng-option *ngFor="let typeItemId of typesItem" [value]="typeItemId.id">{{ typeItemId.name }}</ng-option>
+                        </ng-select>
+                    </span>
+                </td>
+                <td>
+                    <ng-select *ngIf="!item.editing" [disabled]="true" [(ngModel)]="item.typeUnitId" class="form-select">
+                        <ng-option *ngFor="let typeUnitId of typesUnit" [value]="typeUnitId.id">{{ typeUnitId.name }}</ng-option>
+                    </ng-select>
+                    <span *ngIf="item.editing">
+                        <ng-select [disabled]="false" [(ngModel)]="item.typeUnitId" class="form-select">
+                            <ng-option *ngFor="let typeUnitId of typesUnit" [value]="typeUnitId.id">{{ typeUnitId.name }}</ng-option>
+                        </ng-select>
+                    </span>
+                </td>
+                <td>
+                    <ng-select *ngIf="!item.editing" [disabled]="true" [(ngModel)]="item.categoryId" class="form-select">
+                        <ng-option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</ng-option>
+                    </ng-select>
+                    <span *ngIf="item.editing">
+                        <ng-select [disabled]="false" [(ngModel)]="item.categoryId" class="form-select">
+                            <ng-option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</ng-option>
+                        </ng-select>
+                    </span>
+                </td>
+                <td>
+                    <span *ngIf="!item.editing">{{ item.basePrice }}</span>
+                    <input *ngIf="item.editing" type="text" [(ngModel)]="item.basePrice" class="form-control" />
+                </td>
+                <td>
+                    <span *ngIf="!item.editing">{{ item.baseTax }}</span>
+                    <input *ngIf="item.editing" type="text" [(ngModel)]="item.baseTax" class="form-control" />
+                </td>
+                <td>
+                    <span *ngIf="!item.editing">{{ item.cost }}</span>
+                    <input *ngIf="item.editing" type="text" [(ngModel)]="item.cost" class="form-control" />
+                </td>
+                <td width="10px">
+                    <span *ngIf="!item.editing" class="cursor-pointer" (click)="item.editing = true"><mat-icon class="iconEdit">edit</mat-icon></span>
+                    <span *ngIf="item.editing" class="cursor-pointer" (click)="update(item); item.editing = false"><mat-icon class="iconSave">save</mat-icon></span>
+                </td>
+            </tr>
+            
+            
+              <tr>
+                <td><input type="text" [(ngModel)]="newItem.id" class="form-control" disabled /></td>
+                <td><input type="text" [(ngModel)]="newItem.name" class="form-control" [disabled]="!showBlankRow"/></td>
+                <td><input type="text" [(ngModel)]="newItem.description" class="form-control" [disabled]="!showBlankRow"/></td>
+                <td><input type="text" [(ngModel)]="newItem.code" class="form-control" [disabled]="!showBlankRow"/></td>
+                <td>
+                    <ng-select [disabled]="!showBlankRow" [(ngModel)]="newItem.typeItemId" class="form-select">
+                        <ng-option *ngFor="let typeItemId of typesItem" [value]="typeItemId.id">{{ typeItemId.name }}</ng-option>
+                    </ng-select>
+                </td>                
+                <td>
+                    <ng-select [disabled]="!showBlankRow" [(ngModel)]="newItem.typeUnitId" class="form-select">
+                        <ng-option *ngFor="let typeUnitId of typesUnit" [value]="typeUnitId.id">{{ typeUnitId.name }}</ng-option>
+                    </ng-select>
+                </td>
+                <td>
+                    <ng-select [disabled]="!showBlankRow" [(ngModel)]="newItem.categoryId" class="form-select">
+                        <ng-option *ngFor="let categoryId of categories" [value]="categoryId.id">{{ categoryId.name }}</ng-option>
+                    </ng-select>
+                </td>
+                <td><input type="text" [(ngModel)]="newItem.basePrice" class="form-control" [disabled]="!showBlankRow"/></td>
+                <td><input type="text" [(ngModel)]="newItem.baseTax" class="form-control" [disabled]="!showBlankRow"/></td>
+                <td><input type="text" [(ngModel)]="newItem.cost" class="form-control" [disabled]="!showBlankRow"/></td>
+                <td width="10px">
+                    <span *ngIf="showBlankRow" class="cursor-pointer" (click)="create()"><mat-icon class="iconSave">save</mat-icon></span>
+                    <span *ngIf="!showBlankRow" class="cursor-pointer" (click)="showNew()"><mat-icon class="iconCreate">add</mat-icon></span>
+                </td>
+               <!--  <td *ngIf="showBlankRow">
+                    <button class="btn btn-sm btn-success" (click)="create()">Save</button>                   
+                </td>
+                <td *ngIf="!showBlankRow">
+                    <button class="btn btn-sm btn-success" (click)="showNew()"><mat-icon class="iconCreate">add</mat-icon></button>
+                </td> -->
+            </tr>
+            
               <tr *ngIf="items.length === 0">
                   <td colspan="6">No items were found with the established filters.</td>
               </tr>
