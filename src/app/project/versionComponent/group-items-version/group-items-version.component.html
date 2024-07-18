@@ -11,9 +11,9 @@
       <div class="row mb-3">
           <div class="col-sm-12 col-md-3">
               <fieldset>
-                  <label>Groups <span class="validacion">*</span></label>
+                  <label>Categories <span class="validacion">*</span></label>
                   <select formControlName="groupId" class="form-select">
-                      <option value="" selected>Select a group</option>
+                      <option value="" selected>Select a category</option>
                       <option *ngFor="let group of groupItems" [value]="group.id">{{ group.name }}</option>
                   </select>
                   <app-validacion
