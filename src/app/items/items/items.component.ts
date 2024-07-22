@@ -100,6 +100,16 @@ export class ItemsComponent {
       });
   }
 
+  closeCreate() {
+    this.showBlankRow = false;
+    this.newItem = {};
+  }
+
+  closeUpdate(item: ItemModel) {
+    item.editing = false
+    this.pager.refrescar();
+  }
+
   getTypeUnit() {
     this.serviceMaster.getTypeUnits().subscribe({
       next: (resp) => {

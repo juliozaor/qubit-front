@@ -51,7 +51,6 @@ export class CreateItemsVersionModalComponent {
   }
 
   ngOnInit() {
-    
     this.formulario.get('itemId')!.valueChanges.subscribe((itemId) => {
       const itemSelect = this.items?.find(item => item.id === itemId);
       if (itemSelect) {
@@ -154,6 +153,7 @@ export class CreateItemsVersionModalComponent {
   
   closeModal() {
     this.serviceModal.dismissAll();
+    console.log('Gv',this.itemGroupId, 'Pv', this.projectVersionId);
   }
 
 

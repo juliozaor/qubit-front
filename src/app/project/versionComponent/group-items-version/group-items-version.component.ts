@@ -65,7 +65,7 @@ export class GroupItemsVersionComponent {
     .subscribe({
       next: (resp) => {
        // this.pager.refrescar();
-       this.getGroupItems()
+        this.getGroupItems()        
       },
       error: () => {
          this.popup.abrirPopupFallido("Error updating group item", "Try again later.")
@@ -87,8 +87,6 @@ export class GroupItemsVersionComponent {
         .subscribe({
           next: (resp) => {
             this.groupIItemVersions = resp.groupIItemVersions;    
-            console.log( this.groupIItemVersions);
-                    
       },
     });
   }

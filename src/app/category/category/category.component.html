@@ -19,8 +19,8 @@
         <table class="table list-items">
             <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Name</th>
+                    <th>ID</th>
+                    <th>Name</th>
                     <th>code</th>
                     <th colspan="2" class="text-center">Actions</th>
                 </tr>
@@ -44,7 +44,9 @@
                         <span *ngIf="!category.editing" class="cursor-pointer" (click)="category.editing = true"><mat-icon class="iconEdit">edit</mat-icon></span>
                         <span *ngIf="category.editing" class="cursor-pointer" (click)="update(category); category.editing = false"><mat-icon class="iconSave">save</mat-icon></span>
                     </td>
-                  
+                    <td width="10px">
+                        <span *ngIf="category.editing" class="cursor-pointer" (click)="closeUpdate(category)"><mat-icon class="iconClose">close</mat-icon></span>
+                    </td>
                 </tr>
                 <tr>
                     <td><input type="text" [(ngModel)]="newCategory.id" class="form-control" disabled /></td>
@@ -55,9 +57,10 @@
                         <span *ngIf="showBlankRow" class="cursor-pointer" (click)="create()"><mat-icon class="iconSave">save</mat-icon></span>
                         <span *ngIf="!showBlankRow" class="cursor-pointer" (click)="showNew()"><mat-icon class="iconCreate">add</mat-icon></span>
                     </td>
-                  
+                    <td width="10px">
+                        <span *ngIf="showBlankRow" class="cursor-pointer" (click)="closeCreate()"><mat-icon class="iconClose">close</mat-icon></span>
+                    </td>
                 </tr>
-
                 <tr *ngIf="categories.length === 0">
                     <td colspan="6">No group items were found with the established filters.</td>
                 </tr>

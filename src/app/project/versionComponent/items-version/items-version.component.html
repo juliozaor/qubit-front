@@ -4,9 +4,9 @@
     <span style="max-width: 80%;"> <!-- Establece el ancho máximo -->
         <img *ngIf="unfolded" src="assets/images/unfolded.png" class="cursor-pointer" draggable="false" alt="unfolded">
         <img *ngIf="!unfolded" src="assets/images/folded.png" class="cursor-pointer" draggable="false" alt="folded">
-        <span class="texto-azul-004884 fs-14px fw-semibold">{{itemsGroup.name}}</span>
+        <span class="texto-azul-004884 fs-14px fw-semibold">{{itemsGroup.itemsGroup.name}}</span>
     </span>
-    <span class="cursor-pointer" (click)="deleteGroup(itemsGroup.id)"><mat-icon class="iconDelete">delete</mat-icon></span>
+    <span class="cursor-pointer" (click)="deleteGroup(itemsGroup.itemsGroup.id)"><mat-icon class="iconDelete">delete</mat-icon></span>
 </div>
   
   <div class="w-100 overflow-auto custom-scroll" [ngClass]="{'d-none': !unfolded, 'd-block': unfolded}">
@@ -27,6 +27,7 @@
                   <th>Number Unit</th>
                   <th>Price Unit</th>
                   <th>Price Total</th>
+                  <th>Tax</th>
                   <th>Cost</th>
                   <th>Cost Total</th>
                   <th>Margin</th>
@@ -34,7 +35,7 @@
               </tr>
           </thead>
           <tbody>
-              <tr *ngFor="let item of itemsGroup.items">
+              <tr *ngFor="let item of itemsGroup.itemsGroup.items">
                   <td>{{ item.id }}</td>
                   <td>{{ item.code }}</td>
                   <td>{{ item.name }}</td>
@@ -42,6 +43,7 @@
                   <td>{{ item.numberUnit }}</td>
                   <td>{{ item.priceUnit }}</td>
                   <td>{{ item.priceTotal }}</td>
+                  <td>{{ item.tax }}</td>
                   <td>{{ item.cost }}</td>
                   <td>{{ item.costTotal }}</td>
                   <td>{{ item.margin }}</td>
@@ -52,6 +54,30 @@
                     <span class="cursor-pointer" (click)="deleteItem(item.id)"><mat-icon class="iconDelete">delete</mat-icon> </span>
                 </td>
               </tr>
+              <tr >
+                <td><input type="text"  class="form-control" disabled/></td>
+                <td><input type="text"  class="form-control" disabled/></td>
+                <td>
+                  <ng-select [disabled]="!showBlankRow" [(ngModel)]="newItems.itemId" class="form-select">
+                    <ng-option *ngFor="let item of items" [value]="item.id">{{ item.name }}</ng-option>
+                  </ng-select>
+              </td>
+                <td><input type="text"  class="form-control" disabled/></td>
+                <td><input type="text" [(ngModel)]="newItems.numberUnit" class="form-control" [disabled]="!showBlankRow"/></td>
+                <td><input type="text" [(ngModel)]="newItems.priceUnit" class="form-control" [disabled]="!showBlankRow"/></td>
+                <td><input type="text" [(ngModel)]="newItems.priceTotal"  class="form-control" [disabled]="!showBlankRow"/></td>
+                <td><input type="text" [(ngModel)]="newItems.tax" class="form-control" [disabled]="!showBlankRow"/></td>
+                <td><input type="text" [(ngModel)]="newItems.cost" class="form-control" [disabled]="!showBlankRow"/></td>
+                <td><input type="text" [(ngModel)]="newItems.costTotal" class="form-control" [disabled]="!showBlankRow"/></td>
+                <td><input type="text" [(ngModel)]="newItems.margin" class="form-control" [disabled]="!showBlankRow"/></td>
+                <td width="10px">
+                    <span *ngIf="showBlankRow" class="cursor-pointer" (click)="create()"><mat-icon class="iconSave">save</mat-icon></span>
+                    <span *ngIf="!showBlankRow" class="cursor-pointer" (click)="showNew()"><mat-icon class="iconCreate">add</mat-icon></span>
+                </td>
+                <td width="10px">
+                    <span *ngIf="showBlankRow" class="cursor-pointer" (click)="closeCreate()"><mat-icon class="iconClose">close</mat-icon></span>
+                </td>
+          </tr>
               <tr *ngIf="itemsGroup.items?.length === 0">
                   <td colspan="6">No items were found with the established filters.</td>
               </tr>

@@ -79,6 +79,16 @@ export class CategoryComponent {
       });
   }
 
+  closeCreate() {
+    this.showBlankRow = false;
+    this.newCategory = {};
+  }
+
+  closeUpdate(category:CategoryModel) {
+    category.editing = false
+    this.pager.refrescar();
+  }
+
   openCategoriess(groupId: number) {
     if (groupId) {
       this.route.navigate(['/dashboard/items-group/items', groupId]);

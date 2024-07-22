@@ -107,6 +107,15 @@ export class ProjectVersionComponent {
       });
   }
 
+  closeCreate() {
+    this.showBlankRow = false;
+    this.newProjectVersion = {};
+  }
+
+  closeUpdate(versionProject:ProjectVersionModel) {
+    versionProject.editing = false
+    this.pager.refrescar();
+  }
   getConceptDraws() {
     this.serviceConcept.getConceptDraws(1,100000).subscribe({
       next: (resp) => {
