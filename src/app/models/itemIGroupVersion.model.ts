@@ -13,4 +13,5 @@ export class ItemIGroupVersionModel {
   costTotal?: number;
   margin?: number;
   actualQuantity?: number;
+  editing?:boolean = false;
 } 

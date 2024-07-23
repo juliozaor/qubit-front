@@ -6,6 +6,7 @@ import { ItemIGroupVersionItemService } from '../../project-version-item.service
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ItemModel } from '../../../models/item.model';
 import { ItemsService } from '../../../items/items.service';
+import { ItemIGroupVersionModel } from '../../../models/itemIGroupVersion.model';
 
 import Swal from 'sweetalert2';
 
@@ -104,6 +105,20 @@ export class ItemsVersionComponent {
             'Error updating Project',
             'Try again later.'
           );
+        },
+      });
+  }
+
+  update(ItemIGroupVersion: ItemIGroupVersionModel) {    
+    this.service
+      .updateItemIGroup(ItemIGroupVersion)
+      .subscribe({
+        next: () => {           
+          this.updatedIItemVersion()
+          ItemIGroupVersion.editing = false;
+        },
+        error: () => {
+           this.popup.abrirPopupFallido("Error updating project", "Try again later.")
         },
       });
   }

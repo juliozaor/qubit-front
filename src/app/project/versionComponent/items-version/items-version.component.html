@@ -40,16 +40,41 @@
                   <td>{{ item.code }}</td>
                   <td>{{ item.name }}</td>
                   <td>{{ item.description }}</td>
-                  <td>{{ item.numberUnit }}</td>
-                  <td>{{ item.priceUnit }}</td>
-                  <td>{{ item.priceTotal }}</td>
-                  <td>{{ item.tax }}</td>
-                  <td>{{ item.cost }}</td>
-                  <td>{{ item.costTotal }}</td>
-                  <td>{{ item.margin }}</td>
-                  <td width="10px">
-                      <span class="cursor-pointer" (click)="modalUpdate(item)" ><mat-icon class="iconEdit">edit</mat-icon> </span>
+                  <td>
+                    <span *ngIf="!item.editing">{{ item.numberUnit }}</span>
+                    <input *ngIf="item.editing" type="text" [(ngModel)]="item.numberUnit" class="form-control" />
                   </td>
+                  <td>
+                    <span *ngIf="!item.editing">{{ item.priceUnit }}</span>
+                    <input *ngIf="item.editing" type="text" [(ngModel)]="item.priceUnit" class="form-control" />
+                  </td>
+                  <td>
+                    <span *ngIf="!item.editing">{{  item.priceTotal }}</span>
+                    <input *ngIf="item.editing" type="text" [(ngModel)]="item.priceTotal" class="form-control" />
+                  </td>
+                  <td>
+                    <span *ngIf="!item.editing">{{ item.tax }}</span>
+                    <input *ngIf="item.editing" type="text" [(ngModel)]="item.tax" class="form-control" />
+                  </td>
+                  <td>
+                    <span *ngIf="!item.editing">{{ item.cost }}</span>
+                    <input *ngIf="item.editing" type="text" [(ngModel)]="item.cost" class="form-control" />
+                  </td>
+                  <td>
+                    <span *ngIf="!item.editing">{{ item.costTotal }}</span>
+                    <input *ngIf="item.editing" type="text" [(ngModel)]="item.costTotal" class="form-control" />
+                  </td>
+                  <td>
+                    <span *ngIf="!item.editing">{{ item.margin }}</span>
+                    <input *ngIf="item.editing" type="text" [(ngModel)]="item.margin" class="form-control" />
+                  </td>
+                  <td width="10px">
+                    <span *ngIf="!item.editing" class="cursor-pointer" (click)="item.editing = true"><mat-icon class="iconEdit">edit</mat-icon></span>
+                    <span *ngIf="item.editing" class="cursor-pointer" (click)="update(item); item.editing = false"><mat-icon class="iconSave">save</mat-icon></span>
+                  </td>
+                  <td width="10px">
+                    <span *ngIf="item.editing" class="cursor-pointer" (click)="closeUpdate(item)"><mat-icon class="iconClose">close</mat-icon></span>
+                </td>
                   <td width="10px">
                     <span class="cursor-pointer" (click)="deleteItem(item.id)"><mat-icon class="iconDelete">delete</mat-icon> </span>
                 </td>
