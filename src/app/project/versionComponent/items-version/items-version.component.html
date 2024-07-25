@@ -62,11 +62,11 @@
                   </td>
                   <td>
                     <span *ngIf="!item.editing">{{ item.costTotal }}</span>
-                    <input *ngIf="item.editing" type="text" [(ngModel)]="item.costTotal" class="form-control" />
+                    <input *ngIf="item.editing" type="text" [(ngModel)]="item.costTotal" disabled class="form-control" />
                   </td>
                   <td>
                     <span *ngIf="!item.editing">{{ item.margin }}</span>
-                    <input *ngIf="item.editing" type="text" [(ngModel)]="item.margin" class="form-control" />
+                    <input *ngIf="item.editing" type="text" [(ngModel)]="item.margin" disabled class="form-control" />
                   </td>
                   <td width="10px">
                     <span *ngIf="!item.editing" class="cursor-pointer" (click)="item.editing = true"><mat-icon class="iconEdit">edit</mat-icon></span>

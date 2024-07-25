@@ -62,11 +62,11 @@ export class ItemsVersionComponent {
       this.newItems.tax = itemSelect?.baseTax;
       this.newItems.cost = itemSelect?.cost; 
       if (this.newItems.priceUnit && this.newItems.numberUnit && this.newItems.tax == undefined) {
-        return;
+        return console.log("Error al calcular el precio total, parametros indefinidos");
       }
       this.newItems.priceTotal = this.calculateTotalPrice(this.newItems.priceUnit, this.newItems.numberUnit, this.newItems.tax)
-      if (this.newItems.numberUnit, this.newItems.cost == undefined) {
-        return;
+      if (this.newItems.cost == undefined) {
+        return console.log("Error al calcular el costo total, parametros indefinidos");
       }
       this.newItems.costTotal = this.calculateCost(this.newItems.numberUnit, this.newItems.cost);
       this.newItems.margin = this.calculateMargin(1,this.newItems.priceUnit, this.newItems.cost);
@@ -76,15 +76,16 @@ export class ItemsVersionComponent {
   }
 
 
+
   create() {
     this.newItems.itemGroupId = this.itemsGroup.itemsGroup.id;
     this.newItems.projectVersionId = this.projectVersionId;
     if (this.newItems.priceUnit && this.newItems.numberUnit && this.newItems.tax == undefined) {
-      return;
+      return console.log("Error al calcular el precio total, parametros indefinidos");
     }
     this.newItems.priceTotal = this.calculateTotalPrice(this.newItems.priceUnit, this.newItems.numberUnit, this.newItems.tax)
-    if (this.newItems.numberUnit, this.newItems.cost == undefined) {
-      return;
+    if (this.newItems.cost == undefined) {
+      return console.log("Error al calcular el costo total, parametros indefinidos");
     }
     if (!this.newItems.costTotal) {
       this.newItems.costTotal = this.calculateCost(this.newItems.numberUnit, this.newItems.cost);    
@@ -108,13 +109,23 @@ export class ItemsVersionComponent {
       });
   }
 
-  update(ItemIGroupVersion: ItemIGroupVersionModel) {   
-    console.log(ItemIGroupVersion);
-    const { priceUnit, numberUnit, tax } = ItemIGroupVersion;
+  update(ItemIGroupVersion: ItemIGroupVersionModel) {
+    const { priceUnit, numberUnit, tax, cost } = ItemIGroupVersion;
+    
     if (priceUnit && numberUnit && tax == undefined) {
-      return
+      console.log("Error al calcular el precio total, parametros indefinidos");
+      return;
     }
     ItemIGroupVersion.priceTotal = this.calculateTotalPrice(priceUnit!, numberUnit!, tax!)
+    
+    if (cost == undefined) {
+      console.log("Error al calcular el costo total, parametros indefinidos");
+      return;
+    }
+    ItemIGroupVersion.costTotal = this.calculateCost(numberUnit!, cost);
+    ItemIGroupVersion.margin = this.calculateMargin(1,priceUnit!, cost);
+    console.log(ItemIGroupVersion);
+    return;
     this.service
       .updateItemIGroup(ItemIGroupVersion)
       .subscribe({
@@ -146,14 +157,13 @@ export class ItemsVersionComponent {
     return (cost * nUnit);
   }
 
-  calculateMargin(c:number, priceUnit: number, cost: number, margin?: string) {
+  calculateMargin(c:number, priceUnit: number, cost: number, margin?: number) {
     if(c == 1){
-     return margin = (((priceUnit-cost) / cost) * 100).toFixed(2);
+     return margin = parseFloat((((priceUnit-cost) / cost) * 100).toFixed(2));
     }else if(c == 2 && margin != undefined){
-      return priceUnit = cost+ (cost * parseFloat(margin) / 100);
+      return priceUnit = cost+ (cost * margin / 100);
     }
-    return console.log("Fallo al calcular el margen");
-    ;
+    return c;
   }
 
   calculateTotalPrice(pUnit: number, nUnit: number, taxU: number) {
