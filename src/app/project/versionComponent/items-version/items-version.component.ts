@@ -54,45 +54,44 @@ export class ItemsVersionComponent {
     this.getItems()
   }
 
-  ngOnInit() {
-    this.formulario.get('itemId')!.valueChanges.subscribe((itemId) => {
-      const itemSelect = this.items?.find(item => item.id === itemId);
-      if (itemSelect) {
-        this.formulario.patchValue({
-          priceUnit: itemSelect.basePrice,
-          tax: itemSelect.baseTax,
-          cost: itemSelect.cost
-        });
-        this.calculateTotalPrice();
+
+  onItemIdChange() {
+    if (this.newItems.itemId) {
+      const itemSelect = this.items?.find(item => item.id === this.newItems.itemId);
+      this.newItems.priceUnit = itemSelect?.basePrice;
+      this.newItems.tax = itemSelect?.baseTax;
+      this.newItems.cost = itemSelect?.cost; 
+      if (this.newItems.priceUnit && this.newItems.numberUnit && this.newItems.tax == undefined) {
+        return;
       }
-    });
-
-    this.formulario.get('priceTotal')!.disable();
-    this.formulario.get('numberUnit')!.valueChanges.subscribe(() => {
-      this.calculateTotalPrice();
-      this.calculateCost();
-    });
-    this.formulario.get('priceUnit')!.valueChanges.subscribe(() => {
-      this.calculateTotalPrice();
-      this.calculateMargin(1);
-    });
-    this.formulario.get('tax')!.valueChanges.subscribe(() => {
-      this.calculateTotalPrice();
-    });
-
-    this.formulario.get('cost')!.valueChanges.subscribe(() => {
-      this.calculateCost();
-      this.calculateMargin(1);
-    });
-
-    // console.log(this.itemsGroup.itemsGroup.items);
-
+      this.newItems.priceTotal = this.calculateTotalPrice(this.newItems.priceUnit, this.newItems.numberUnit, this.newItems.tax)
+      if (this.newItems.numberUnit, this.newItems.cost == undefined) {
+        return;
+      }
+      this.newItems.costTotal = this.calculateCost(this.newItems.numberUnit, this.newItems.cost);
+      this.newItems.margin = this.calculateMargin(1,this.newItems.priceUnit, this.newItems.cost);
+    } else {
+      this.newItems = {};
+    }
   }
 
 
   create() {
     this.newItems.itemGroupId = this.itemsGroup.itemsGroup.id;
     this.newItems.projectVersionId = this.projectVersionId;
+    if (this.newItems.priceUnit && this.newItems.numberUnit && this.newItems.tax == undefined) {
+      return;
+    }
+    this.newItems.priceTotal = this.calculateTotalPrice(this.newItems.priceUnit, this.newItems.numberUnit, this.newItems.tax)
+    if (this.newItems.numberUnit, this.newItems.cost == undefined) {
+      return;
+    }
+    if (!this.newItems.costTotal) {
+      this.newItems.costTotal = this.calculateCost(this.newItems.numberUnit, this.newItems.cost);    
+    }
+    if (!this.newItems.margin) {
+      this.newItems.margin = this.calculateMargin(1,this.newItems.priceUnit, this.newItems.cost);
+    }
     this.service.setItemIGroup(this.newItems)
       .subscribe({
         next: () => {
@@ -109,7 +108,13 @@ export class ItemsVersionComponent {
       });
   }
 
-  update(ItemIGroupVersion: ItemIGroupVersionModel) {    
+  update(ItemIGroupVersion: ItemIGroupVersionModel) {   
+    console.log(ItemIGroupVersion);
+    const { priceUnit, numberUnit, tax } = ItemIGroupVersion;
+    if (priceUnit && numberUnit && tax == undefined) {
+      return
+    }
+    ItemIGroupVersion.priceTotal = this.calculateTotalPrice(priceUnit!, numberUnit!, tax!)
     this.service
       .updateItemIGroup(ItemIGroupVersion)
       .subscribe({
@@ -118,7 +123,7 @@ export class ItemsVersionComponent {
           ItemIGroupVersion.editing = false;
         },
         error: () => {
-           this.popup.abrirPopupFallido("Error updating project", "Try again later.")
+          this.popup.abrirPopupFallido("Error updating project", "Try again later.")
         },
       });
   }
@@ -137,35 +142,22 @@ export class ItemsVersionComponent {
     items.editing = false
   }
 
-  calculateCost() {
-    const cost = parseFloat(this.formulario.get('cost')!.value);
-    const nUnit = parseFloat(this.formulario.get('numberUnit')!.value);
-    const costTotal = (cost * nUnit);
-    this.formulario.get('costTotal')!.setValue(costTotal);
+  calculateCost(nUnit: number, cost: number) {
+    return (cost * nUnit);
   }
 
-  calculateMargin(c:number) {
-    const priceUnit = parseFloat(this.formulario.get('priceUnit')!.value);
-    const cost = parseFloat(this.formulario.get('cost')!.value);
-    const margin = parseFloat(this.formulario.get('margin')!.value);
-
+  calculateMargin(c:number, priceUnit: number, cost: number, margin?: string) {
     if(c == 1){
-    const margin = (((priceUnit-cost) / cost) * 100).toFixed(2);
-    this.formulario.get('margin')!.setValue(margin)
-
-    }else if(c == 2){
-      const pUnit = cost+ (cost * margin / 100);
-      this.formulario.get('priceUnit')!.setValue(pUnit)
+     return margin = (((priceUnit-cost) / cost) * 100).toFixed(2);
+    }else if(c == 2 && margin != undefined){
+      return priceUnit = cost+ (cost * parseFloat(margin) / 100);
     }
+    return console.log("Fallo al calcular el margen");
+    ;
   }
 
-  calculateTotalPrice() {
-    const pUnit = parseFloat(this.formulario.get('priceUnit')!.value);
-    const nUnit = parseFloat(this.formulario.get('numberUnit')!.value);
-    const taxU = parseFloat(this.formulario.get('tax')!.value);
-
-    const pTotal = (pUnit * nUnit) + taxU;
-    this.formulario.get('priceTotal')!.setValue(pTotal);
+  calculateTotalPrice(pUnit: number, nUnit: number, taxU: number) {
+    return (pUnit * nUnit) + taxU;
   }
 
   modalCreate() {
@@ -220,7 +212,7 @@ export class ItemsVersionComponent {
   }
 
   deleteGroup(id:number){
-   this.service.deleteGroupIItems(id,this.projectVersionId).subscribe({
+    this.service.deleteGroupIItems(id,this.projectVersionId).subscribe({
       next: (resp) => {
         this.popup.abrirPopupExitoso('Group items delete successfully.');
         this.deleteGroupEmit.emit();
@@ -238,7 +230,7 @@ export class ItemsVersionComponent {
   }
 
   createdIItemVersion() {
-   this.createdIItemVersionModal.emit();
+    this.createdIItemVersionModal.emit();
   }
 
   updatedIItemVersion() {

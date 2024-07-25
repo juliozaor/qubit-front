@@ -1,7 +1,11 @@
 ng-select{
-    min-width: 105px;
-    max-width: 105px;
+    max-width: 150px;
 }
-.table-responsive {
+
+.table-responsive{
     min-height: 400px;
+}
+
+td input{
+    width: 70px;;
 }

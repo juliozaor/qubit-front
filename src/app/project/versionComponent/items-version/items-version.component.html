@@ -50,7 +50,7 @@
                   </td>
                   <td>
                     <span *ngIf="!item.editing">{{  item.priceTotal }}</span>
-                    <input *ngIf="item.editing" type="text" [(ngModel)]="item.priceTotal" class="form-control" />
+                    <input *ngIf="item.editing" type="text" [(ngModel)]="item.priceTotal" disabled class="form-control" />
                   </td>
                   <td>
                     <span *ngIf="!item.editing">{{ item.tax }}</span>
@@ -83,14 +83,14 @@
                 <td><input type="text"  class="form-control" disabled/></td>
                 <td><input type="text"  class="form-control" disabled/></td>
                 <td>
-                  <ng-select [disabled]="!showBlankRow" [(ngModel)]="newItems.itemId" class="form-select">
+                  <ng-select [disabled]="!showBlankRow" [(ngModel)]="newItems.itemId" class="form-select" (ngModelChange)="onItemIdChange()">
                     <ng-option *ngFor="let item of items" [value]="item.id">{{ item.name }}</ng-option>
                   </ng-select>
               </td>
                 <td><input type="text"  class="form-control" disabled/></td>
                 <td><input type="text" [(ngModel)]="newItems.numberUnit" class="form-control" [disabled]="!showBlankRow"/></td>
                 <td><input type="text" [(ngModel)]="newItems.priceUnit" class="form-control" [disabled]="!showBlankRow"/></td>
-                <td><input type="text" [(ngModel)]="newItems.priceTotal"  class="form-control" [disabled]="!showBlankRow"/></td>
+                <td><input type="text" [(ngModel)]="newItems.priceTotal"  class="form-control" disabled/></td>
                 <td><input type="text" [(ngModel)]="newItems.tax" class="form-control" [disabled]="!showBlankRow"/></td>
                 <td><input type="text" [(ngModel)]="newItems.cost" class="form-control" [disabled]="!showBlankRow"/></td>
                 <td><input type="text" [(ngModel)]="newItems.costTotal" class="form-control" [disabled]="!showBlankRow"/></td>
