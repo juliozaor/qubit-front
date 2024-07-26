@@ -124,8 +124,6 @@ export class ItemsVersionComponent {
     }
     ItemIGroupVersion.costTotal = this.calculateCost(numberUnit!, cost);
     ItemIGroupVersion.margin = this.calculateMargin(1,priceUnit!, cost);
-    console.log(ItemIGroupVersion);
-    return;
     this.service
       .updateItemIGroup(ItemIGroupVersion)
       .subscribe({
