@@ -112,10 +112,16 @@ export class ProjectVersionComponent {
     this.newProjectVersion = {};
   }
 
-  closeUpdate(versionProject:ProjectVersionModel) {
+  closeUpdate(versionProject: ProjectVersionModel) {
+    Object.assign(versionProject, versionProject.originalValues)
     versionProject.editing = false
-    this.pager.refrescar();
   }
+
+  editVersionProject(versionProject: ProjectVersionModel) {
+    versionProject.originalValues = { ...versionProject }
+    versionProject.editing = true    
+  }
+
   getConceptDraws() {
     this.serviceConcept.getConceptDraws(1,100000).subscribe({
       next: (resp) => {

@@ -20,5 +20,5 @@ export class ProjectVersionModel {
   statusId?: number;
   userId?: number;
   editing?:boolean = false;
-
+  originalValues?: any;
 } 

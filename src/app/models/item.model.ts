@@ -12,5 +12,6 @@ export class ItemModel {
   userId?: number;
   quantity?: number;
   cost?: number;
-  editing?:boolean = false;
+  editing?: boolean = false;
+  originalValues?: any;
 } 

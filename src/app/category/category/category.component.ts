@@ -84,9 +84,14 @@ export class CategoryComponent {
     this.newCategory = {};
   }
 
-  closeUpdate(category:CategoryModel) {
+  closeUpdate(category: CategoryModel) {
+    Object.assign(category, category.originalValues);
     category.editing = false
-    this.pager.refrescar();
+  }
+
+  editCategory(category: CategoryModel) {
+    category.originalValues = { ...category };
+    category.editing = true
   }
 
   openCategoriess(groupId: number) {

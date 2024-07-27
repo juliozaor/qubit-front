@@ -148,7 +148,13 @@ export class ItemsVersionComponent {
   }
 
   closeUpdate(items: ItemModel) {
+    Object.assign(items, items.originalValues);
     items.editing = false
+  }
+
+  editItem(items: ItemModel) {
+    items.originalValues = {...items}
+    items.editing = true    
   }
 
   calculateCost(nUnit: number, cost: number) {

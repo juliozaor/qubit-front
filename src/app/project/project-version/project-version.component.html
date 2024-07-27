@@ -91,8 +91,8 @@
                   </ng-select>
                   </td>
                   <td width="10px">
-                      <span *ngIf="!version.editing" class="cursor-pointer" (click)="version.editing = true"><mat-icon class="iconEdit">edit</mat-icon> </span>
-                      <span *ngIf="version.editing" class="cursor-pointer" (click)="updateVersion(version); version.editing = false"><mat-icon class="iconSave">save</mat-icon></span>
+                      <span *ngIf="!version.editing" class="cursor-pointer" (click)="editVersionProject(version)"><mat-icon class="iconEdit">edit</mat-icon> </span>
+                      <span *ngIf="version.editing" class="cursor-pointer" (click)="updateVersion(version)"><mat-icon class="iconSave">save</mat-icon></span>
                   </td>
                   <td width="10px">
                     <span *ngIf="version.editing" class="cursor-pointer" (click)="closeUpdate(version)"><mat-icon class="iconClose">close</mat-icon></span>

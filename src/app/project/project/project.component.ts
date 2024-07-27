@@ -126,8 +126,13 @@ export class ProjectComponent {
   }
 
   closeUpdate(project: ProjectModel) {
+    Object.assign(project, project.originalValues);
     project.editing = false
-    this.pager.refrescar();
+  }
+
+  editProject(project: ProjectModel) {
+    project.originalValues = {...project}
+    project.editing = true    
   }
 
   getProjectStatus() {

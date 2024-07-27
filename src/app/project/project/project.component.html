@@ -97,8 +97,8 @@
                     <input *ngIf="project.editing" type="text" [(ngModel)]="project.basepath" class="form-control" />
                 </td>
                   <td width="10px">
-                    <span *ngIf="!project.editing" class="cursor-pointer" (click)="project.editing = true"><mat-icon class="iconEdit">edit</mat-icon></span>
-                    <span *ngIf="project.editing" class="cursor-pointer" (click)="update(project); project.editing = false"><mat-icon class="iconSave">save</mat-icon></span>
+                    <span *ngIf="!project.editing" class="cursor-pointer" (click)="editProject(project)"><mat-icon class="iconEdit">edit</mat-icon></span>
+                    <span *ngIf="project.editing" class="cursor-pointer" (click)="update(project)"><mat-icon class="iconSave">save</mat-icon></span>
                   </td>
                   <td width="10px">
                     <span *ngIf="project.editing" class="cursor-pointer" (click)="closeUpdate(project)"><mat-icon class="iconClose">close</mat-icon></span>

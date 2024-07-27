@@ -106,8 +106,13 @@ export class ItemsComponent {
   }
 
   closeUpdate(item: ItemModel) {
+    Object.assign(item, item.originalValues);
     item.editing = false
-    this.pager.refrescar();
+  }
+
+  editItem(item: ItemModel) {
+    item.originalValues = {...item};
+    item.editing = true
   }
 
   getTypeUnit() {

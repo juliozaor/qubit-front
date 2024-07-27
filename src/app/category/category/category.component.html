@@ -41,8 +41,8 @@
                     </td>
 
                     <td width="10px">
-                        <span *ngIf="!category.editing" class="cursor-pointer" (click)="category.editing = true"><mat-icon class="iconEdit">edit</mat-icon></span>
-                        <span *ngIf="category.editing" class="cursor-pointer" (click)="update(category); category.editing = false"><mat-icon class="iconSave">save</mat-icon></span>
+                        <span *ngIf="!category.editing" class="cursor-pointer" (click)="editCategory(category)"><mat-icon class="iconEdit">edit</mat-icon></span>
+                        <span *ngIf="category.editing" class="cursor-pointer" (click)="update(category)"><mat-icon class="iconSave">save</mat-icon></span>
                     </td>
                     <td width="10px">
                         <span *ngIf="category.editing" class="cursor-pointer" (click)="closeUpdate(category)"><mat-icon class="iconClose">close</mat-icon></span>

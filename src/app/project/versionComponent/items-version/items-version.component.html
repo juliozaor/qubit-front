@@ -13,7 +13,7 @@
     <div class="d-flex mb-3 justify-content-end me-5"> 
       <fieldset class="d-flex align-items-end me-2">
         <button class="boton btn btn-secondary  d-flex align-items-center me-2" (click)="updateItems()"><mat-icon class="iconCreate">sync</mat-icon> Update item</button>
-        <button class="boton btn btn-success  d-flex align-items-center" (click)="modalCreate()"><mat-icon class="iconCreate">add</mat-icon> New Item</button>
+        <!-- <button class="boton btn btn-success  d-flex align-items-center" (click)="modalCreate()"><mat-icon class="iconCreate">add</mat-icon> New Item</button> -->
     </fieldset>
     </div>
     <div class="table-responsive mb-3">
@@ -69,10 +69,10 @@
                     <input *ngIf="item.editing" type="text" [(ngModel)]="item.margin" disabled class="form-control" />
                   </td>
                   <td width="10px">
-                    <span *ngIf="!item.editing" class="cursor-pointer" (click)="item.editing = true"><mat-icon class="iconEdit">edit</mat-icon></span>
+                    <span *ngIf="!item.editing" class="cursor-pointer" (click)="editItem(item)"><mat-icon class="iconEdit">edit</mat-icon></span>
                     <span *ngIf="item.editing" class="cursor-pointer" (click)="update(item); item.editing = false"><mat-icon class="iconSave">save</mat-icon></span>
                   </td>
-                  <td width="10px">
+                  <td width="10px" >
                     <span *ngIf="item.editing" class="cursor-pointer" (click)="closeUpdate(item)"><mat-icon class="iconClose">close</mat-icon></span>
                 </td>
                   <td width="10px">
