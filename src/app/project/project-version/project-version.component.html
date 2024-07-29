@@ -91,11 +91,14 @@
                   </ng-select>
                   </td>
                   <td width="10px">
-                      <span *ngIf="!version.editing" class="cursor-pointer" (click)="version.editing = true"><mat-icon class="iconEdit">edit</mat-icon> </span>
-                      <span *ngIf="version.editing" class="cursor-pointer" (click)="updateVersion(version); version.editing = false"><mat-icon class="iconSave">save</mat-icon></span>
+                      <span *ngIf="!version.editing" class="cursor-pointer" (click)="editVersionProject(version)"><mat-icon class="iconEdit">edit</mat-icon> </span>
+                      <span *ngIf="version.editing" class="cursor-pointer" (click)="updateVersion(version)"><mat-icon class="iconSave">save</mat-icon></span>
                   </td>
                   <td width="10px">
-                    <span class="cursor-pointer" (click)="openGroups(version.id!)" >Group Items</span>
+                    <span *ngIf="version.editing" class="cursor-pointer" (click)="closeUpdate(version)"><mat-icon class="iconClose">close</mat-icon></span>
+                </td>
+                  <td width="10px">
+                    <span class="cursor-pointer" (click)="openGroups(version.id!)" >Items</span>
                 </td>
                   <td width="10px">
                     <span class="cursor-pointer" (click)="cloneVersion(version.id!)">clone</span>
@@ -124,6 +127,9 @@
                     <span *ngIf="showBlankRow" class="cursor-pointer" (click)="create()"><mat-icon class="iconSave">save</mat-icon></span>
                     <span *ngIf="!showBlankRow" class="cursor-pointer" (click)="showNew()"><mat-icon class="iconCreate">add</mat-icon></span>
                 </td>
+                <td width="10px">
+                  <span *ngIf="showBlankRow" class="cursor-pointer" (click)="closeCreate()"><mat-icon class="iconClose">close</mat-icon></span>
+              </td>
           </tr>
               <tr *ngIf="versionProjects?.length === 0">
                   <td colspan="6">No group project version were found with the established filters.</td>

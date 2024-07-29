@@ -100,6 +100,21 @@ export class ItemsComponent {
       });
   }
 
+  closeCreate() {
+    this.showBlankRow = false;
+    this.newItem = {};
+  }
+
+  closeUpdate(item: ItemModel) {
+    Object.assign(item, item.originalValues);
+    item.editing = false
+  }
+
+  editItem(item: ItemModel) {
+    item.originalValues = {...item};
+    item.editing = true
+  }
+
   getTypeUnit() {
     this.serviceMaster.getTypeUnits().subscribe({
       next: (resp) => {

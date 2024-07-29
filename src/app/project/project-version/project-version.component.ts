@@ -107,6 +107,21 @@ export class ProjectVersionComponent {
       });
   }
 
+  closeCreate() {
+    this.showBlankRow = false;
+    this.newProjectVersion = {};
+  }
+
+  closeUpdate(versionProject: ProjectVersionModel) {
+    Object.assign(versionProject, versionProject.originalValues)
+    versionProject.editing = false
+  }
+
+  editVersionProject(versionProject: ProjectVersionModel) {
+    versionProject.originalValues = { ...versionProject }
+    versionProject.editing = true    
+  }
+
   getConceptDraws() {
     this.serviceConcept.getConceptDraws(1,100000).subscribe({
       next: (resp) => {

@@ -4,5 +4,6 @@ export class CategoryModel {
   name?:string;
   statusId?: number;
   userId?: number; 
-  editing?:boolean = false; 
+  editing?: boolean = false; 
+  originalValues?: any;
 } 

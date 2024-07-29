@@ -95,8 +95,11 @@
                     <input *ngIf="item.editing" type="text" [(ngModel)]="item.cost" class="form-control" />
                 </td>
                 <td width="10px">
-                    <span *ngIf="!item.editing" class="cursor-pointer" (click)="item.editing = true"><mat-icon class="iconEdit">edit</mat-icon></span>
-                    <span *ngIf="item.editing" class="cursor-pointer" (click)="update(item); item.editing = false"><mat-icon class="iconSave">save</mat-icon></span>
+                    <span *ngIf="!item.editing" class="cursor-pointer" (click)="editItem(item)"><mat-icon class="iconEdit">edit</mat-icon></span>
+                    <span *ngIf="item.editing" class="cursor-pointer" (click)="update(item)"><mat-icon class="iconSave">save</mat-icon></span>
+                </td>
+                <td width="10px">
+                    <span *ngIf="item.editing" class="cursor-pointer" (click)="closeUpdate(item)"><mat-icon class="iconClose">close</mat-icon></span>
                 </td>
             </tr>
             
@@ -127,6 +130,9 @@
                 <td width="10px">
                     <span *ngIf="showBlankRow" class="cursor-pointer" (click)="create()"><mat-icon class="iconSave">save</mat-icon></span>
                     <span *ngIf="!showBlankRow" class="cursor-pointer" (click)="showNew()"><mat-icon class="iconCreate">add</mat-icon></span>
+                </td>
+                <td width="10px">
+                    <span *ngIf="showBlankRow" class="cursor-pointer" (click)="closeCreate()"><mat-icon class="iconClose">close</mat-icon></span>
                 </td>
                <!--  <td *ngIf="showBlankRow">
                     <button class="btn btn-sm btn-success" (click)="create()">Save</button>                   

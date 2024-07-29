@@ -106,18 +106,33 @@ export class ProjectComponent {
       });
   }
 
-  update(project:ProjectModel) {    
+  update(project: ProjectModel) {    
     this.service
       .updateProject(project)
       .subscribe({
         next: () => {           
            this.updatedProject()
-           project.editing=false;
+          project.editing = false;
         },
         error: () => {
            this.popup.abrirPopupFallido("Error updating project", "Try again later.")
         },
       });
+  }
+
+  closeCreate() {
+    this.showBlankRow = false;
+    this.newProject = {};
+  }
+
+  closeUpdate(project: ProjectModel) {
+    Object.assign(project, project.originalValues);
+    project.editing = false
+  }
+
+  editProject(project: ProjectModel) {
+    project.originalValues = {...project}
+    project.editing = true    
   }
 
   getProjectStatus() {

@@ -18,5 +18,6 @@ export class ProjectModel {
   userId?: number;
   clientName?: string;
   projectStatus?: string;
-  editing?:boolean = false;
+  editing?: boolean = false;
+  originalValues?: any;
 } 

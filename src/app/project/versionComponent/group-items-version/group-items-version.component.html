@@ -1,6 +1,6 @@
 <div class="p-5">
   <div class="d-flex justify-content-between texto-primario mb-3 title-y">
-    <h2 class="fw-semibold">Group Items : (project: {{ name }}, version: {{version}})</h2>
+    <h2 class="fw-semibold">Items : (project: {{ name }}, version: {{version}})</h2>
         <button type="submit" class="btn btn-outline-danger" (click)="back()">
         Go back
       </button>
@@ -27,7 +27,7 @@
 
       <div class="d-flex justify-content-left">
           <button type="button" class="boton primario relleno" (click)="addGroup()">
-            Add item group
+            Add item
           </button>
       </div>
   </form>
@@ -41,7 +41,7 @@
       (createdIItemVersionModal)="createdIItemVersionModal()"
       (updateIItemVersionModal)="updateIItemVersionModal()"
       (deleteIItemVersionModal)="deleteIItemVersionModal()"
-      [itemsGroup] = "groupIItemVersion['itemsGroup']"
+      [itemsGroup] = "groupIItemVersion"
       [projectVersionId] = "projectVersionId!"
       />
     </li>
