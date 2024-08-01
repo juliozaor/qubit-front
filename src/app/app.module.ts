@@ -16,7 +16,7 @@ import { AlertasModule } from './alertas/alertas.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent    
   ],
   imports: [
     BrowserModule,

@@ -7,4 +7,14 @@ import { environment } from '../../../environments/environment';
   styleUrl: './editor.component.css'
 })
 export class EditorComponent {
+
+  urlGraphic: string;
+
+  constructor() {
+    this.urlGraphic = environment.urlGraphic;
+  }
+
+  ngOnInit() {
+    console.log(this.urlGraphic);
+  }
 }
