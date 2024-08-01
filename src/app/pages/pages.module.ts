@@ -16,6 +16,7 @@ import { HomeComponent } from './home/home.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AlertasModule } from '../alertas/alertas.module';
 import { EditorComponent } from './editor/editor.component';
+import { SafeUrlPipe } from '../pipes/safe-url.pipe';
 
 
 
@@ -23,7 +24,8 @@ import { EditorComponent } from './editor/editor.component';
   declarations: [
     PagesComponent,
     HomeComponent,
-    EditorComponent
+    EditorComponent,
+    SafeUrlPipe
   ],
   imports: [
     CommonModule,
