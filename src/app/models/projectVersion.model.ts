@@ -19,4 +19,6 @@ export class ProjectVersionModel {
   quoteName?: string;
   statusId?: number;
   userId?: number;
+  editing?:boolean = false;
+  originalValues?: any;
 } 

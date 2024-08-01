@@ -15,11 +15,11 @@
           </button>
       </fieldset>
   </div>
-  <div class="d-flex mb-3 justify-content-end me-5"> 
+  <!-- <div class="d-flex mb-3 justify-content-end me-5"> 
     <fieldset class="d-flex align-items-end me-2">
         <button class="boton btn btn-success  d-flex align-items-center" (click)="modalCreate()"><mat-icon class="iconCreate">add</mat-icon> New Project</button>
     </fieldset>
-  </div>
+  </div> -->
   <div class="table-responsive mb-3">
       <table class="table list-items">
           <thead>
@@ -29,7 +29,10 @@
                   <th>Name</th>
                   <th>Subtitle</th>
                   <th>ClientId</th>
+                  <th>Type Project</th>
+                  <th>System Tecnology</th>
                   <th>ProjectStatusId</th>
+                  <th>Concept Draw</th>
                   <th>Basepath</th>
                   <th colspan="3" class="text-center" width="50px">Actions</th>
               </tr>
@@ -37,21 +40,114 @@
           <tbody>
               <tr *ngFor="let project of projects">
                   <td>{{ project.id }}</td>
-                  <td>{{ project.code }}</td>
-                  <td>{{ project.name }}</td>
-                  <td>{{ project.subtitle }}</td>
-                  <td>{{ project.clientName }}</td>
-                  <td>{{ project.projectStatus }}</td>
-                  <td>{{ project.basepath }}</td>
+                  <td>
+                    <span *ngIf="!project.editing">{{ project.code }}</span>
+                    <input *ngIf="project.editing" type="text" [(ngModel)]="project.code" class="form-control" />
+                </td>
+                  <td>
+                    <span *ngIf="!project.editing">{{ project.name }}</span>
+                    <input *ngIf="project.editing" type="text" [(ngModel)]="project.name" class="form-control" />
+                </td>
+                  <td>
+                    <span *ngIf="!project.editing">{{ project.subtitle }}</span>
+                    <input *ngIf="project.editing" type="text" [(ngModel)]="project.subtitle" class="form-control" />
+                </td>
+                  <td>
+                    <ng-select  *ngIf="!project.editing" [disabled]="true"  [(ngModel)]="project.clientId" class="form-select">
+                        <ng-option *ngFor="let clientId of clients" [value]="clientId.id">{{ clientId.names }}</ng-option>
+                    </ng-select>
+                    <ng-select  *ngIf="project.editing" [disabled]="false" [(ngModel)]="project.clientId" class="form-select">
+                        <ng-option *ngFor="let clientId of clients" [value]="clientId.id">{{ clientId.names }}</ng-option>
+                    </ng-select>
+                </td>
+                  <td>
+                    <ng-select  *ngIf="!project.editing" [disabled]="true"  [(ngModel)]="project.typeProjectId" class="form-select">
+                        <ng-option *ngFor="let typeProjectId of typeProjects" [value]="typeProjectId.id">{{ typeProjectId.name }}</ng-option>
+                    </ng-select>
+                    <ng-select  *ngIf="project.editing" [disabled]="false" [(ngModel)]="project.typeProjectId" class="form-select">
+                        <ng-option *ngFor="let typeProjectId of typeProjects" [value]="typeProjectId.id">{{ typeProjectId.name }}</ng-option>
+                    </ng-select>
+                </td>
+                  <td>
+                    <ng-select  *ngIf="!project.editing" [disabled]="true" [(ngModel)]="project.typeApplicationId" class="form-select">
+                        <ng-option *ngFor="let typeApplicationId of typeApplications" [value]="typeApplicationId.id">{{ typeApplicationId.name }}</ng-option>
+                    </ng-select>
+                    <ng-select  *ngIf="project.editing" [disabled]="false" [(ngModel)]="project.typeApplicationId" class="form-select">
+                        <ng-option *ngFor="let typeApplicationId of typeApplications" [value]="typeApplicationId.id">{{ typeApplicationId.name }}</ng-option>
+                    </ng-select>
+                </td>
+                  <td>
+                    <ng-select *ngIf="!project.editing" [disabled]="true" [(ngModel)]="project.projectStatusId" class="form-select">
+                        <ng-option *ngFor="let projectStatusId of projectStatus" [value]="projectStatusId.id">{{ projectStatusId.name }}</ng-option>
+                    </ng-select>
+                    <ng-select *ngIf="project.editing" [disabled]="false" [(ngModel)]="project.projectStatusId" class="form-select">
+                        <ng-option *ngFor="let projectStatusId of projectStatus" [value]="projectStatusId.id">{{ projectStatusId.name }}</ng-option>
+                    </ng-select>
+                </td>
+                  <td>
+                    <ng-select  *ngIf="!project.editing"  [disabled]="true" [(ngModel)]="project.conceptnetDrawId" class="form-select">
+                        <ng-option *ngFor="let conceptDraw of conceptDraws" [value]="conceptDraw.id">{{conceptDraw.name }}</ng-option>
+                    </ng-select>
+                    <ng-select  *ngIf="project.editing" [disabled]="false" [(ngModel)]="project.conceptnetDrawId" class="form-select">
+                        <ng-option *ngFor="let conceptDraw of conceptDraws" [value]="conceptDraw.id">{{conceptDraw.name }}</ng-option>
+                    </ng-select>
+                </td>
+                  <td>
+                    <span *ngIf="!project.editing">{{ project.basepath }}</span>
+                    <input *ngIf="project.editing" type="text" [(ngModel)]="project.basepath" class="form-control" />
+                </td>
                   <td width="10px">
-                      <span class="cursor-pointer" (click)="modalUpdate(project)" ><mat-icon class="iconEdit">edit</mat-icon> </span>
+                    <span *ngIf="!project.editing" class="cursor-pointer" (click)="editProject(project)"><mat-icon class="iconEdit">edit</mat-icon></span>
+                    <span *ngIf="project.editing" class="cursor-pointer" (click)="update(project)"><mat-icon class="iconSave">save</mat-icon></span>
                   </td>
+                  <td width="10px">
+                    <span *ngIf="project.editing" class="cursor-pointer" (click)="closeUpdate(project)"><mat-icon class="iconClose">close</mat-icon></span>
+                </td>
                   <td width="10px">
                     <span class="cursor-pointer" (click)="openVersions(project.id!, project.name!)" >Versions</span>
                 </td>
                   <td width="10px">
                     <span class="cursor-pointer" (click)="modalClone(project.id!, project.name!)">Clone</span>
                 </td>
+
+                <tr>
+                    <td><input type="text"  [(ngModel)]="newProject.id" class="form-control" disabled /></td>
+                    <td><input type="text"  [(ngModel)]="newProject.code" class="form-control" [disabled]="!showBlankRow"/></td>
+                    <td><input type="text" [(ngModel)]="newProject.name"  class="form-control" [disabled]="!showBlankRow"/></td>
+                    <td><input type="text" [(ngModel)]="newProject.subtitle"  class="form-control" [disabled]="!showBlankRow"/></td>
+                    <td>
+                        <ng-select  [disabled]="!showBlankRow" [(ngModel)]="newProject.clientId" class="form-select">
+                            <ng-option *ngFor="let clientId of clients" [value]="clientId.id">{{ clientId.names }}</ng-option>
+                        </ng-select>
+                    </td>                
+                    <td>
+                        <ng-select  [disabled]="!showBlankRow" [(ngModel)]="newProject.typeProjectId" class="form-select">
+                            <ng-option *ngFor="let typeProjectId of typeProjects" [value]="typeProjectId.id">{{ typeProjectId.name }}</ng-option>
+                        </ng-select>
+                    </td>  
+                    <td>
+                        <ng-select  [disabled]="!showBlankRow" [(ngModel)]="newProject.typeApplicationId" class="form-select">
+                            <ng-option *ngFor="let typeApplicationId of typeApplications" [value]="typeApplicationId.id">{{ typeApplicationId.name }}</ng-option>
+                        </ng-select>
+                    </td>
+                    <td>
+                        <ng-select  [disabled]="!showBlankRow" [(ngModel)]="newProject.projectStatusId" class="form-select">
+                            <ng-option *ngFor="let projectStatusId of projectStatus" [value]="projectStatusId.id">{{ projectStatusId.name }}</ng-option>
+                        </ng-select>
+                    </td>
+                    <td>
+                        <ng-select  [disabled]="!showBlankRow" [(ngModel)]="newProject.conceptnetDrawId" class="form-select">
+                            <ng-option *ngFor="let conceptDraw of conceptDraws" [value]="conceptDraw.id">{{conceptDraw.name }}</ng-option>
+                        </ng-select>
+                    </td>  
+                    <td><input type="text" [(ngModel)]="newProject.basepath" class="form-control" [disabled]="!showBlankRow"/></td>
+                    <td width="10px">
+                        <span *ngIf="showBlankRow" class="cursor-pointer" (click)="create()"><mat-icon class="iconSave">save</mat-icon></span>
+                        <span *ngIf="!showBlankRow" class="cursor-pointer" (click)="showNew()"><mat-icon class="iconCreate">add</mat-icon></span>
+                    </td>
+                    <td width="10px">
+                        <span *ngIf="showBlankRow" class="cursor-pointer" (click)="closeCreate()"><mat-icon class="iconClose">close</mat-icon></span>
+                    </td>
               </tr>
               <tr *ngIf="projects.length === 0">
                   <td colspan="6">No projects were found with the established filters.</td>

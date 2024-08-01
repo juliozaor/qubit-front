@@ -1,0 +1,86 @@
+<div class="p-5">
+    <h2 class="texto-primario fw-semibold mb-3">Categories</h2>
+  
+    <div class="d-flex mb-3 flex-gap-20">
+        <fieldset class="me-2">
+            <label class="fs-14px fw-semibold">Keyword</label>
+            <app-input-search [(ngModel)]="term" />
+        </fieldset>
+        <fieldset class="d-flex align-items-end">
+            <button class="boton primario relleno me-2" (click)="updateFilters()">
+              Search
+            </button>
+            <button class="boton primario delineado" (click)="clearFilters()">
+              Clean filters
+            </button>
+        </fieldset>
+    </div>
+    <div class="table-responsive mb-3">
+        <table class="table list-items">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>code</th>
+                    <th colspan="2" class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let category of categories">
+                    <td>{{ category.id }}</td>
+
+                    <td>
+                        <span *ngIf="!category.editing">{{ category.name }}</span>
+                        <input *ngIf="category.editing" type="text" [(ngModel)]="category.name" class="form-control" />
+                                           
+                    </td>
+                    <td>
+                        <span *ngIf="!category.editing">{{ category.code }}</span>
+                        <input *ngIf="category.editing" type="text" [(ngModel)]="category.code" class="form-control" />
+                   
+                    </td>
+
+                    <td width="10px">
+                        <span *ngIf="!category.editing" class="cursor-pointer" (click)="editCategory(category)"><mat-icon class="iconEdit">edit</mat-icon></span>
+                        <span *ngIf="category.editing" class="cursor-pointer" (click)="update(category)"><mat-icon class="iconSave">save</mat-icon></span>
+                    </td>
+                    <td width="10px">
+                        <span *ngIf="category.editing" class="cursor-pointer" (click)="closeUpdate(category)"><mat-icon class="iconClose">close</mat-icon></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="text" [(ngModel)]="newCategory.id" class="form-control" disabled /></td>
+                    <td><input type="text" [(ngModel)]="newCategory.name" class="form-control" [disabled]="!showBlankRow"/></td>
+                    <td><input type="text" [(ngModel)]="newCategory.code" class="form-control" [disabled]="!showBlankRow"/></td>
+                   
+                    <td width="10px">
+                        <span *ngIf="showBlankRow" class="cursor-pointer" (click)="create()"><mat-icon class="iconSave">save</mat-icon></span>
+                        <span *ngIf="!showBlankRow" class="cursor-pointer" (click)="showNew()"><mat-icon class="iconCreate">add</mat-icon></span>
+                    </td>
+                    <td width="10px">
+                        <span *ngIf="showBlankRow" class="cursor-pointer" (click)="closeCreate()"><mat-icon class="iconClose">close</mat-icon></span>
+                    </td>
+                </tr>
+                <tr *ngIf="categories.length === 0">
+                    <td colspan="6">No group items were found with the established filters.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex justify-content-end">
+        <ngb-pagination 
+        [collectionSize]="this.pager.totalRecords ?? 0"
+        [pageSize]="this.pager.limit"
+        [page]="this.pager.page"
+        [maxSize]="5"
+        (pageChange)="this.pager.cambiarPagina($event)"
+        >
+            <ng-template ngbPaginationFirst>Prim.</ng-template>
+            <ng-template ngbPaginationLast>Ult.</ng-template>
+            <ng-template ngbPaginationPrevious>Ant.</ng-template>
+            <ng-template ngbPaginationNext>Sig.</ng-template>
+        </ngb-pagination>
+    </div>
+  </div>
+ 
+  <app-popup #popup />

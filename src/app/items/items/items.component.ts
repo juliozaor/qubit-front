@@ -8,6 +8,11 @@ import { ItemModel } from '../../models/item.model';
 import { CreateItemModalComponent } from '../create-item-modal/create-item-modal.component';
 import { PopupComponent } from '../../alertas/componentes/popup/popup.component';
 import { UpdateItemModalComponent } from '../update-item-modal/update-item-modal.component';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MastersService } from '../../services/masters.service';
+import { TypeUnitModel } from '../../models/masters/typeUnit';
+import { TypeItemModel } from '../../models/masters/typeItem';
+import { CategoryModel } from '../../models/category.model';
 
 @Component({
   selector: 'app-items',
@@ -20,12 +25,33 @@ export class ItemsComponent {
   @ViewChild('popup') popup!: PopupComponent;
   pager: Pager<Filters>;
   items: ItemModel[] = [];
+  typesUnit: TypeUnitModel[] = [];
+  typesItem: TypeItemModel[] = [];
+  categories: CategoryModel[] = [];
   term: string = '';
-  constructor(private service: ItemsService) {
+  showBlankRow: boolean = false;
+  newItem: any = {};
+  form: FormGroup;
+  constructor(private service: ItemsService,
+    private serviceMaster: MastersService) {
     this.pager = new Pager<Filters>(this.getItems);
+    this.form = new FormGroup({
+      code: new FormControl('', [Validators.required]),
+      name: new FormControl('', [Validators.required]),
+      description: new FormControl('', [Validators.required]),
+      typeItemId: new FormControl(undefined, [Validators.required]),
+      basePrice: new FormControl(undefined, [Validators.required]),
+      baseTax: new FormControl(undefined, [Validators.required]),
+      typeUnitId: new FormControl(undefined, [Validators.required]),
+      categoryId: new FormControl(undefined, [Validators.required]),
+      cost: new FormControl(undefined, [Validators.required]),
+    });
   }
 
   ngOnInit(): void {
+    this.getTypeItem()
+    this.getTypeUnit()
+    this.getCategories()
     this.pager.begin(1, 5);
   }
 
@@ -39,6 +65,81 @@ export class ItemsComponent {
       });
     });
   };
+
+  showNew(){
+    this.newItem = {}; 
+    this.showBlankRow = true;
+  }
+
+  create() {
+    this.service
+      .setItem(this.newItem)
+      .subscribe({
+        next: () => {
+           this.createdItem()
+           this.showBlankRow = false; 
+           this.newItem = {}; 
+        },
+        error: () => {
+           this.popup.abrirPopupFallido("Error updating item", "Try again later.")
+        },
+      });
+  }
+
+  update(item:ItemModel) {    
+    this.service
+      .updateItem(item)
+      .subscribe({
+        next: () => {           
+           this.updatedItem()
+           item.editing=false;
+        },
+        error: () => {
+           this.popup.abrirPopupFallido("Error updating item", "Try again later.")
+        },
+      });
+  }
+
+  closeCreate() {
+    this.showBlankRow = false;
+    this.newItem = {};
+  }
+
+  closeUpdate(item: ItemModel) {
+    Object.assign(item, item.originalValues);
+    item.editing = false
+  }
+
+  editItem(item: ItemModel) {
+    item.originalValues = {...item};
+    item.editing = true
+  }
+
+  getTypeUnit() {
+    this.serviceMaster.getTypeUnits().subscribe({
+      next: (resp) => {
+        this.typesUnit = resp.typeUnit;  
+             
+      },
+    });
+  }
+  getTypeItem() {
+    this.serviceMaster.getTypeItems().subscribe({
+      next: (resp) => {
+        this.typesItem = resp.typeItem;       
+      },
+    });
+  }
+
+  getCategories() {
+    this.serviceMaster.getCategories().subscribe({
+      next: (resp) => {
+        this.categories = resp.categories;    
+         
+        console.log(this.categories);            
+      },
+    });
+  }
 
   modalCreate() {
     this.modalCreateItem.openModal();

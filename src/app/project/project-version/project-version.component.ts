@@ -11,7 +11,11 @@ import { ProjectVersionModel } from '../../models/projectVersion.model';
 import { CreateVersionModalComponent } from '../versionComponent/create-version-modal/create-version-modal.component';
 import { UpdateVersionModalComponent } from '../versionComponent/update-version-modal/update-version-modal.component';
 import Swal from 'sweetalert2';
+import { ConceptDrawModel } from '../../models/conceptDraw.model';
+import { ConcepDrawService } from '../../conceptDraw/concep-draw.service';
 import { ItemIGroupVersionItemService } from '../project-version-item.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-project-version',
@@ -28,22 +32,103 @@ export class ProjectVersionComponent {
   pager: Pager<Filters>;
   versionProjects?:ProjectVersionModel[]
   term: string = '';
+  showBlankRow: boolean = false;
+  newProjectVersion: any = {};
+  form: FormGroup;
+  conceptDraws: ConceptDrawModel[] = [];
+
   
   constructor(private routeActive: ActivatedRoute, 
     private service: ProjectService, 
     private serviceVersion: ProjectVersionService, 
     private serviceVersionItem: ItemIGroupVersionItemService, 
-    private route: Router){
+    private serviceConcept: ConcepDrawService,
+    private route: Router) {
+      this.form = new FormGroup({         
+        version: new FormControl('', [Validators.required]),
+        revisedDate: new FormControl('', [Validators.required]),
+        executiveSummary: new FormControl('', [Validators.required]),
+        scopeWork: new FormControl('', [Validators.required]),
+        tradingConditions: new FormControl('', [Validators.required]),
+        commentClarifications: new FormControl('', [Validators.required]),
+        paymentTerms: new FormControl('', [Validators.required]),
+        quotePath: new FormControl('', [Validators.required]),
+        quoteName: new FormControl('', [Validators.required]),
+        conceptnetDrawId: new FormControl('', [Validators.required]),
+  
+      });
+      this.getConceptDraws();
     this.routeActive.params.subscribe(params => {
       this.projectId = params['projectId'];  
       this.name = params['name'];      
     });
+    
     this.pager = new Pager<Filters>(this.getVersions);
   }
 
   ngOnInit(): void {
     this.pager.begin(1, 5);
   }  
+
+  showNew(){
+    this.newProjectVersion = {}; 
+    this.showBlankRow = true;
+  }
+
+  create() {
+    this.serviceVersion
+      .setProjectVersion(this.newProjectVersion)
+      .subscribe({
+        next: () => {
+          this.createdVersion();
+          this.showBlankRow = false; 
+          this.newProjectVersion = {}; 
+        },
+        error: () => {
+          this.popup.abrirPopupFallido(
+            'Error updating Project',
+            'Try again later.'
+          );
+        },
+      });
+  }
+
+  updateVersion(versionProject:ProjectVersionModel) {    
+    this.serviceVersion
+      .updateProjectVersion(versionProject)
+      .subscribe({
+        next: () => {           
+           this.updatedVersion()
+           versionProject.editing=false;
+        },
+        error: () => {
+           this.popup.abrirPopupFallido("Error updating project", "Try again later.")
+        },
+      });
+  }
+
+  closeCreate() {
+    this.showBlankRow = false;
+    this.newProjectVersion = {};
+  }
+
+  closeUpdate(versionProject: ProjectVersionModel) {
+    Object.assign(versionProject, versionProject.originalValues)
+    versionProject.editing = false
+  }
+
+  editVersionProject(versionProject: ProjectVersionModel) {
+    versionProject.originalValues = { ...versionProject }
+    versionProject.editing = true    
+  }
+
+  getConceptDraws() {
+    this.serviceConcept.getConceptDraws(1,100000).subscribe({
+      next: (resp) => {
+        this.conceptDraws = resp.conceptDraws;
+      },
+    });
+  }
 
   getVersions = (page: number, limit: number, filters?: Filters) => {    
     return new Observable<Pagination>((subscribe) => {

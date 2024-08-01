@@ -4,6 +4,7 @@ export class ItemModel {
   name?: string;
   description?: string;
   typeItemId?: number;
+  categoryId?: number;
   basePrice?: number;
   baseTax?: number;
   typeUnitId?: number;
@@ -11,4 +12,6 @@ export class ItemModel {
   userId?: number;
   quantity?: number;
   cost?: number;
+  editing?: boolean = false;
+  originalValues?: any;
 } 

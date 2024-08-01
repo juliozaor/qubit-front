@@ -9,6 +9,7 @@ import { TypeItemModel } from '../models/masters/typeItem';
 import { TypeProjectModel } from '../models/masters/typeProject';
 import { TypeUnitModel } from '../models/masters/typeUnit';
 import { ProjectStatusModel } from '../models/masters/projectStatus';
+import { CategoryModel } from '../models/category.model';
 
 @Injectable({
   providedIn: 'root'
@@ -66,6 +67,12 @@ getTypeUnits (){
 getProjectStatus (){
   let endpoint = `${this.rute}/projectStatus`  
   return this.http.get<{projectStatus: ProjectStatusModel[]}>(
+    `${this.urlBackend}${endpoint}`, { headers: this.headers })
+}
+
+getCategories (){
+  let endpoint = `${this.rute}/categories`  
+  return this.http.get<{categories: CategoryModel[]}>(
     `${this.urlBackend}${endpoint}`, { headers: this.headers })
 }
 

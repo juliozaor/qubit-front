@@ -11,6 +11,7 @@ import { Pagination } from '../../../compartido/modelos/Pagination';
 import { Observable } from 'rxjs';
 import { ItemsVersionComponent } from '../items-version/items-version.component';
 import { ProjectVersionService } from '../../project-version.service';
+import { MastersService } from '../../../services/masters.service';
 
 @Component({
   selector: 'app-group-items-version',
@@ -38,13 +39,13 @@ export class GroupItemsVersionComponent {
     private routeActive: ActivatedRoute,
     private serviceVersion: ProjectVersionService, 
     private service: ItemIGroupVersionItemService,
-    private serviceGroup: ItemGroupService, private route:Router
+    private serviceMaster: MastersService, private route:Router
   ) {
     this.routeActive.params.subscribe((params) => {
       this.projectVersionId = params['projectVersionId'];
       this.location = params['location'];
     });
-    this.getGroups();
+    this.getCategories();
     this.getProjectVersion();
     this.formulario = new FormGroup({
       groupId: new FormControl(undefined, [Validators.required]),
@@ -64,7 +65,7 @@ export class GroupItemsVersionComponent {
     .subscribe({
       next: (resp) => {
        // this.pager.refrescar();
-       this.getGroupItems()
+        this.getGroupItems()        
       },
       error: () => {
          this.popup.abrirPopupFallido("Error updating group item", "Try again later.")
@@ -85,7 +86,7 @@ export class GroupItemsVersionComponent {
         .getVersionByGroups(this.projectVersionId!)
         .subscribe({
           next: (resp) => {
-            this.groupIItemVersions = resp.groupIItemVersions;            
+            this.groupIItemVersions = resp.groupIItemVersions;    
       },
     });
   }
@@ -110,10 +111,10 @@ export class GroupItemsVersionComponent {
     this.popup.abrirPopupExitoso('item delete successfully.');
   }
 
-  getGroups() {
-    this.serviceGroup.getgroupItems(1, 100000).subscribe({
+  getCategories() {
+    this.serviceMaster.getCategories().subscribe({
       next: (resp) => {
-        this.groupItems = resp.groupItems;
+        this.groupItems = resp.categories;
       },
     });
   }
